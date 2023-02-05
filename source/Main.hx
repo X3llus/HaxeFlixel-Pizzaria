@@ -10,4 +10,9 @@ class Main extends Sprite
 		super();
 		addChild(new FlxGame(0, 0, PlayState));
 	}
+	public function newOrder(complexity:Int){
+		
+	}
 }
+
+
