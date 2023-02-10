@@ -915,7 +915,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "2";
+	app.meta.h["build"] = "3";
 	app.meta.h["company"] = "HaxeFlixel";
 	app.meta.h["file"] = "HaxeFlixel_Pizzaria";
 	app.meta.h["name"] = "HaxeFlixel_Pizzaria";
@@ -8047,7 +8047,6 @@ flixel_addons_display_FlxExtendedSprite.prototype = $extend(flixel_FlxSprite.pro
 		}
 	}
 	,stopDrag: function() {
-		haxe_Log.trace("stopdrag 1",{ fileName : "flixel/addons/display/FlxExtendedSprite.hx", lineNumber : 770, className : "flixel.addons.display.FlxExtendedSprite", methodName : "stopDrag"});
 		this.isDragged = false;
 		if(this._snapOnRelease) {
 			this.set_x(Math.floor(this.x / this._snapX) * this._snapX);
@@ -8157,15 +8156,20 @@ Pizza.prototype = $extend(flixel_addons_display_FlxExtendedSprite.prototype,{
 	,addTopping: function(topping) {
 		if(this.toppings.indexOf(topping) == -1) {
 			this.toppings.push(topping);
-			var sprite = new flixel_FlxSprite();
-			sprite.loadGraphic("assets/images/pepperoni3.png");
-			flixel_FlxG.game._state.add(sprite);
+			this.addIngredientGraphic(topping);
 		}
-		haxe_Log.trace(topping,{ fileName : "source/Pizza.hx", lineNumber : 47, className : "Pizza", methodName : "addTopping"});
+		haxe_Log.trace(topping,{ fileName : "source/Pizza.hx", lineNumber : 45, className : "Pizza", methodName : "addTopping"});
 	}
 	,loadPizzaGraphic: function(size) {
 		var imgUrl = "assets/images/pizza" + size + ".png";
 		this.loadGraphic(imgUrl);
+	}
+	,addIngredientGraphic: function(topping) {
+		var sprite = new flixel_FlxSprite();
+		sprite.loadGraphic("assets/images/" + topping.toLowerCase() + "3.png");
+		sprite.set_x(this.x);
+		sprite.set_y(this.y);
+		flixel_FlxG.game._state.add(sprite);
 	}
 	,__class__: Pizza
 });
@@ -9178,7 +9182,6 @@ Topping.prototype = $extend(flixel_addons_display_FlxExtendedSprite.prototype,{
 	,mousePressedHandler: function() {
 		this.isPressed = true;
 		if(this.clickable == true && this._clickOnRelease == false) {
-			haxe_Log.trace("Handler",{ fileName : "source/Topping.hx", lineNumber : 45, className : "Topping", methodName : "mousePressedHandler"});
 			this.draggableTopping = new Topping(this.name,this.spritesheet,true);
 			this.draggableTopping.set_frame(this.draggableTopping.frames.frames[1]);
 			this.draggableTopping.enableMouseDrag();

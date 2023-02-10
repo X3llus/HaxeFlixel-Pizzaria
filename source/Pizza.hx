@@ -40,9 +40,7 @@ class Pizza extends FlxExtendedSprite
 		if (!toppings.contains(topping))
 		{
 			toppings.push(topping);
-			var sprite = new FlxSprite();
-			sprite.loadGraphic("assets/images/pepperoni3.png");
-			FlxG.state.add(sprite);
+			addIngredientGraphic(topping);
 		}
 		trace(topping);
 	}
@@ -51,5 +49,14 @@ class Pizza extends FlxExtendedSprite
 	{
 		var imgUrl = "assets/images/pizza" + size + ".png";
 		this.loadGraphic(imgUrl);
+	}
+
+	function addIngredientGraphic(ingredient:String)
+	{
+		var sprite = new FlxSprite();
+		sprite.loadGraphic("assets/images/" + ingredient.toLowerCase() + "3.png");
+		sprite.x = this.x;
+		sprite.y = this.y;
+		FlxG.state.add(sprite);
 	}
 }
