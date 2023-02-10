@@ -22,17 +22,18 @@ class Pizza extends FlxExtendedSprite
 	public function new()
 	{
 		super();
-		var imgUrl = "assets/images/round_dough.png";
+		var imgUrl = "assets/images/round-dough.png";
 		this.loadGraphic(imgUrl);
 		x = 200;
 		y = 200;
 		this.toppings = new Array<String>();
+		enableMouseDrag();
 	}
 
 	/**
 		topping:String - any of the toppings in the game
 	**/
-	public function addIngredient(ingredient:String)
+	public function addTopping(topping:String)
 	{
 		toppings.push(topping);
 		trace(toppings);

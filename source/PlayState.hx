@@ -33,7 +33,7 @@ class PlayState extends FlxState
 			topping.enableMouseClicks(false); // = true;
 		});
 
-		pizza = new Pizza("Large");
+		pizza = new Pizza();
 		add(pizza);
 
 		super.create();
@@ -53,24 +53,27 @@ class PlayState extends FlxState
 			}
 		});
 
-		FlxG.overlap(draggedTopping, pizza, addTopping, checkTopping);
+		// This runs when the mouse button has been let go and the topping is no longer being dragged
+		if (draggedTopping != null && draggedTopping.isDragged == false)
+		{
+			// If it overlaps, addTopping will run if checkTopping returns true,
+			// don't do anything on overlap true return, kill sprite on false overlap return
+			FlxG.overlap(draggedTopping, pizza, addTopping, checkTopping) ? null : draggedTopping.kill();
+		}
+
 		super.update(elapsed);
 	}
 
 	/**
 		Takes a Topping object and Pizza object, adds the topping to the
-		pizza's topping array of toppings.
+		pizza's toppings array.
 	**/
 	function addTopping(topping:Topping, pizza:Pizza)
 	{
 		if (FlxG.pixelPerfectOverlap(topping, pizza))
 		{
-			// Add the topping to the pizza once it is done being dragged
-			if (topping.isDragged == false)
-			{
-				pizza.addTopping(topping.name);
-				topping.kill();
-			};
+			pizza.addTopping(topping.name);
+			topping.kill();
 		};
 	}
 

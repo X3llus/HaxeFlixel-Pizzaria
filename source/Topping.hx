@@ -72,6 +72,7 @@ class Topping extends FlxExtendedSprite
 		{
 			draggableTopping.stopDrag();
 		}
+		
 
 		if (mouseReleasedCallback != null)
 		{

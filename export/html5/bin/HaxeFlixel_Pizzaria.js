@@ -915,7 +915,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "4";
+	app.meta.h["build"] = "5";
 	app.meta.h["company"] = "HaxeFlixel";
 	app.meta.h["file"] = "HaxeFlixel_Pizzaria";
 	app.meta.h["name"] = "HaxeFlixel_Pizzaria";
@@ -3986,7 +3986,7 @@ ManifestResources.init = function(config) {
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$nokiafc22_$ttf);
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf);
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y32:assets%2Fimages%2Fpepperoni1.pngR2i9026R3y5:IMAGER5R7R6tgoR0y32:assets%2Fimages%2Fpepperoni2.pngR2i4206R3R8R5R9R6tgoR0y32:assets%2Fimages%2Fpepperoni3.pngR2i12283R3R8R5R10R6tgoR0y44:assets%2Fimages%2Fpepperoni_spritesheet.jsonR2i970R3R4R5R11R6tgoR0y43:assets%2Fimages%2Fpepperoni_spritesheet.pngR2i15082R3R8R5R12R6tgoR0y32:assets%2Fimages%2FpizzaLarge.pngR2i678R3R8R5R13R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R14R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R15R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR17y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R16R5y28:flixel%2Fsounds%2Fflixel.mp3R18aR20y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R19R18aR17R19hgoR2i33629R3R22R5R21R18aR20R21hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R23R24y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R8R5R29R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R8R5R30R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y32:assets%2Fimages%2Fpepperoni1.pngR2i9026R3y5:IMAGER5R7R6tgoR0y32:assets%2Fimages%2Fpepperoni2.pngR2i4206R3R8R5R9R6tgoR0y32:assets%2Fimages%2Fpepperoni3.pngR2i12283R3R8R5R10R6tgoR0y44:assets%2Fimages%2Fpepperoni_spritesheet.jsonR2i970R3R4R5R11R6tgoR0y43:assets%2Fimages%2Fpepperoni_spritesheet.pngR2i15082R3R8R5R12R6tgoR0y32:assets%2Fimages%2FpizzaLarge.pngR2i678R3R8R5R13R6tgoR0y33:assets%2Fimages%2Fround-dough.pngR2i5314R3R8R5R14R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R15R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R16R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR18y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R17R5y28:flixel%2Fsounds%2Fflixel.mp3R19aR21y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R20R19aR18R20hgoR2i33629R3R23R5R22R19aR21R22hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R24R25y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R8R5R30R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R8R5R31R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -8137,13 +8137,14 @@ flixel_addons_display_FlxExtendedSprite.prototype = $extend(flixel_FlxSprite.pro
 	,__class__: flixel_addons_display_FlxExtendedSprite
 	,__properties__: $extend(flixel_FlxSprite.prototype.__properties__,{get_mouseY:"get_mouseY",get_mouseX:"get_mouseX",get_mouseOver:"get_mouseOver",get_rect:"get_rect",set_point:"set_point",get_point:"get_point",get_springY:"get_springY",get_springX:"get_springX",set_clicks:"set_clicks",get_clicks:"get_clicks"})
 });
-var Pizza = function(size) {
+var Pizza = function() {
 	flixel_addons_display_FlxExtendedSprite.call(this);
-	this.size = size;
-	this.loadPizzaGraphic(size);
+	var imgUrl = "assets/images/round-dough.png";
+	this.loadGraphic(imgUrl);
 	this.set_x(200);
 	this.set_y(200);
 	this.toppings = [];
+	this.enableMouseDrag();
 };
 $hxClasses["Pizza"] = Pizza;
 Pizza.__name__ = "Pizza";
@@ -8152,25 +8153,9 @@ Pizza.prototype = $extend(flixel_addons_display_FlxExtendedSprite.prototype,{
 	toppings: null
 	,sauce: null
 	,bake: null
-	,size: null
-	,rand: null
 	,addTopping: function(topping) {
 		this.toppings.push(topping);
-		this.addIngredientGraphic(topping);
-		haxe_Log.trace(this.toppings,{ fileName : "source/Pizza.hx", lineNumber : 44, className : "Pizza", methodName : "addTopping"});
-	}
-	,loadPizzaGraphic: function(size) {
-		var imgUrl = "assets/images/pizza" + size + ".png";
-		this.loadGraphic(imgUrl);
-	}
-	,addIngredientGraphic: function(ingredient) {
-		var sprite = new flixel_FlxSprite();
-		this.rand = new flixel_math_FlxRandom();
-		sprite.loadGraphic("assets/images/" + ingredient.toLowerCase() + "3.png");
-		sprite.set_x(this.x);
-		sprite.set_y(this.y);
-		sprite.set_angle(this.rand.float(1,360));
-		flixel_FlxG.game._state.add(sprite);
+		haxe_Log.trace(this.toppings,{ fileName : "source/Pizza.hx", lineNumber : 39, className : "Pizza", methodName : "addTopping"});
 	}
 	,__class__: Pizza
 });
@@ -8853,7 +8838,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.toppings.forEach(function(topping) {
 			topping.enableMouseClicks(false);
 		});
-		this.pizza = new Pizza("Large");
+		this.pizza = new Pizza();
 		this.add(this.pizza);
 		flixel_FlxState.prototype.create.call(this);
 	}
@@ -8864,15 +8849,17 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				_gthis.draggedTopping = topping.draggableTopping;
 			}
 		});
-		flixel_FlxG.overlap(this.draggedTopping,this.pizza,$bind(this,this.addTopping),$bind(this,this.checkTopping));
+		if(this.draggedTopping != null && this.draggedTopping.isDragged == false) {
+			if(!flixel_FlxG.overlap(this.draggedTopping,this.pizza,$bind(this,this.addTopping),$bind(this,this.checkTopping))) {
+				this.draggedTopping.kill();
+			}
+		}
 		flixel_FlxState.prototype.update.call(this,elapsed);
 	}
 	,addTopping: function(topping,pizza) {
 		if(flixel_util_FlxCollision.pixelPerfectCheck(topping,pizza,255,null)) {
-			if(topping.isDragged == false) {
-				pizza.addTopping(topping.name);
-				topping.kill();
-			}
+			pizza.addTopping(topping.name);
+			topping.kill();
 		}
 	}
 	,checkTopping: function(topping,pizza) {
