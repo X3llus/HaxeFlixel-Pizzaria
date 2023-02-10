@@ -915,7 +915,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "3";
+	app.meta.h["build"] = "4";
 	app.meta.h["company"] = "HaxeFlixel";
 	app.meta.h["file"] = "HaxeFlixel_Pizzaria";
 	app.meta.h["name"] = "HaxeFlixel_Pizzaria";
@@ -8153,22 +8153,23 @@ Pizza.prototype = $extend(flixel_addons_display_FlxExtendedSprite.prototype,{
 	,sauce: null
 	,bake: null
 	,size: null
+	,rand: null
 	,addTopping: function(topping) {
-		if(this.toppings.indexOf(topping) == -1) {
-			this.toppings.push(topping);
-			this.addIngredientGraphic(topping);
-		}
-		haxe_Log.trace(topping,{ fileName : "source/Pizza.hx", lineNumber : 45, className : "Pizza", methodName : "addTopping"});
+		this.toppings.push(topping);
+		this.addIngredientGraphic(topping);
+		haxe_Log.trace(this.toppings,{ fileName : "source/Pizza.hx", lineNumber : 44, className : "Pizza", methodName : "addTopping"});
 	}
 	,loadPizzaGraphic: function(size) {
 		var imgUrl = "assets/images/pizza" + size + ".png";
 		this.loadGraphic(imgUrl);
 	}
-	,addIngredientGraphic: function(topping) {
+	,addIngredientGraphic: function(ingredient) {
 		var sprite = new flixel_FlxSprite();
-		sprite.loadGraphic("assets/images/" + topping.toLowerCase() + "3.png");
+		this.rand = new flixel_math_FlxRandom();
+		sprite.loadGraphic("assets/images/" + ingredient.toLowerCase() + "3.png");
 		sprite.set_x(this.x);
 		sprite.set_y(this.y);
+		sprite.set_angle(this.rand.float(1,360));
 		flixel_FlxG.game._state.add(sprite);
 	}
 	,__class__: Pizza
