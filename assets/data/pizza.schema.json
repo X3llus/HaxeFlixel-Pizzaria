@@ -1,0 +1,14 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"$id": "pizza-types",
+	"title": "Pizzas",
+	"description": "Types of pizza",
+	"type": "array",
+		"properties": {
+			"name":{
+				"type":"string",
+				"description": "Name of pizza type"
+			}
+	},
+	"required": ["name"]
+  }
