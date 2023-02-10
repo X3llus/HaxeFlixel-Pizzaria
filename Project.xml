@@ -16,10 +16,12 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="640" height="480" fps="60" background="#000000" hardware="true" vsync="false" />
+	<!-- ? resiable allow sit to be fullscreen -->
+	<!-- background was changed to be hex with opcity/transparency -->
+	<window width="1920" height="1080" fps="60" background="#00000000" hardware="true" vsync="false" resizable="true" borderless="true" />
 
 	<!--HTML5-specific-->
-	<window if="html5" resizable="false" />
+	<window if="html5" 	/>
 
 	<!--Desktop-specific-->
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
