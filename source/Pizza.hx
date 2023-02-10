@@ -1,5 +1,7 @@
 package;
 
+import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.addons.display.FlxExtendedSprite;
 
 class Pizza extends FlxExtendedSprite
@@ -34,14 +36,18 @@ class Pizza extends FlxExtendedSprite
 	**/
 	public function addTopping(topping:String)
 	{
+		// No duplicate toppings
 		if (!toppings.contains(topping))
 		{
 			toppings.push(topping);
+			var sprite = new FlxSprite();
+			sprite.loadGraphic("assets/images/pepperoni3.png");
+			FlxG.state.add(sprite);
 		}
-		trace(toppings);
+		trace(topping);
 	}
 
-	public function loadPizzaGraphic(size:String)
+	function loadPizzaGraphic(size:String)
 	{
 		var imgUrl = "assets/images/pizza" + size + ".png";
 		this.loadGraphic(imgUrl);

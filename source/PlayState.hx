@@ -53,11 +53,7 @@ class PlayState extends FlxState
 			}
 		});
 
-		// Check if the dragged topping overlaps the pizza only when not null.
-		if (draggedTopping != null)
-		{
-			FlxG.overlap(draggedTopping, pizza, addTopping);
-		}
+		FlxG.overlap(draggedTopping, pizza, addTopping, checkTopping);
 		super.update(elapsed);
 	}
 
@@ -69,8 +65,24 @@ class PlayState extends FlxState
 	{
 		if (FlxG.pixelPerfectOverlap(topping, pizza))
 		{
-			trace("overlapped");
-			pizza.addTopping(topping.name);
+			// Add the topping to the pizza once it is done being dragged
+			if (topping.isDragged == false)
+			{
+				pizza.addTopping(topping.name);
+				topping.kill();
+			};
 		};
+	}
+
+	function checkTopping(topping:Topping, pizza:Pizza)
+	{
+		if (topping == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }

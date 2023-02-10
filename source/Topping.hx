@@ -30,13 +30,6 @@ class Topping extends FlxExtendedSprite
 		this.name = name;
 		this.spritesheet = spritesheet;
 		frames = this.spritesheet;
-
-		if (dragged == false)
-		{
-			// Initialize the draggable topping and set the proper frame.
-			draggableTopping = new Topping(this.name, this.spritesheet, true);
-			draggableTopping.frame = draggableTopping.frames.getByIndex(1);
-		}
 	}
 
 	#if FLX_MOUSE
@@ -49,16 +42,10 @@ class Topping extends FlxExtendedSprite
 
 		if (clickable == true && _clickOnRelease == false)
 		{
-			trace("Handler");
+			// Initialize the draggable topping and set the proper frame.
+			draggableTopping = new Topping(this.name, this.spritesheet, true);
 
-			/**
-				Revive the sprite if it has been killed. Drag the sprite around 
-				while mouse is still being pressed down.
-			**/
-			if (draggableTopping.alive == false)
-			{
-				draggableTopping.revive();
-			}
+			draggableTopping.frame = draggableTopping.frames.getByIndex(1);
 			draggableTopping.enableMouseDrag();
 			draggableTopping.isDragged = true;
 			draggableTopping._dragOffsetX = 30;
@@ -79,13 +66,11 @@ class Topping extends FlxExtendedSprite
 	 */
 	override public function mouseReleasedHandler():Void
 	{
-		// Kill the sprite once the mouse button is released
-		draggableTopping.kill();
 		isPressed = false;
-
-		if (isDragged == true)
+		// Stop dragging the draggable topping
+		if (draggableTopping.isDragged == true)
 		{
-			stopDrag();
+			draggableTopping.stopDrag();
 		}
 
 		if (mouseReleasedCallback != null)
