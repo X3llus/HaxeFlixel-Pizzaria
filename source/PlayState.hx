@@ -28,13 +28,15 @@ class PlayState extends FlxState
 		createTopping(mushroom, 100, 600);
 		createTopping(yellow_cheese, 200, 600);
 		createTopping(white_cheese, 300, 600);
+		createTopping(dark_sauce, 400, 600);
+		createTopping(light_sauce, 500, 600);
 		add(toppings);
 
 		// Create a group of sauces
-		sauces = new FlxTypedGroup<Sauce>();
-		createSauce(dark_sauce, 400, 600);
-		createSauce(light_sauce, 500, 600);
-		add(sauces);
+		// sauces = new FlxTypedGroup<Sauce>();
+		// createSauce(dark_sauce, 400, 600);
+		// createSauce(light_sauce, 500, 600);
+		// add(sauces);
 
 		// Create a pizza
 		pizza = new Pizza();
@@ -71,14 +73,14 @@ class PlayState extends FlxState
 		/**
 			Iterate through all sauces to determine if a sauce must be added
 		**/
-		sauces.forEach((sauce) ->
-		{
-			if (sauce.addSauce)
-			{
-				pizza.addTopping(sauce.value);
-				sauce.addSauce = false;
-			}
-		});
+		// sauces.forEach((sauce) ->
+		// {
+		// 	if (sauce.addSauce)
+		// 	{
+		// 		pizza.addTopping(sauce.value);
+		// 		sauce.addSauce = false;
+		// 	}
+		// });
 
 		// Only check for overlapping if the pizza is not being dragged
 		if (pizza.isDragged == false)
