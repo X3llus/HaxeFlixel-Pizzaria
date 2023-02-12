@@ -1,40 +1,47 @@
 package;
 
+import Topping.ToppingEnum;
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxExtendedSprite;
 import flixel.addons.plugin.FlxMouseControl;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
+import flixel.input.mouse.FlxMouseEventManager;
 
 class PlayState extends FlxState
 {
 	var toppings:FlxTypedGroup<Topping>;
-	var draggedTopping:Topping;
+	var sauces:FlxTypedGroup<Sauce>;
 	var pizza:Pizza;
+	var oven:Oven;
+
+	public var draggedTopping:Topping;
 
 	override public function create()
 	{
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
+		FlxG.plugins.add(new FlxMouseEventManager());
 
 		// Create a group of toppings
 		toppings = new FlxTypedGroup<Topping>();
-
-		var atlasFrame = FlxAtlasFrames.fromTexturePackerJson(AssetPaths.pepperoni_spritesheet__png, AssetPaths.pepperoni_spritesheet__json);
-		var pepperoni = new Topping("Pepperoni", atlasFrame);
-		pepperoni.frame = pepperoni.frames.getByIndex(0);
-		toppings.add(pepperoni);
-
+		createTopping(pepperoni, 0, 600);
+		createTopping(mushroom, 100, 600);
+		createTopping(yellow_cheese, 200, 600);
+		createTopping(white_cheese, 300, 600);
 		add(toppings);
-		toppings.forEach((topping) ->
-		{
-			topping.enableMouseClicks(false); // = true;
-		});
 
+		// Create a group of sauces
+		sauces = new FlxTypedGroup<Sauce>();
+		createSauce(dark_sauce, 400, 600);
+		createSauce(light_sauce, 500, 600);
+		add(sauces);
+
+		// Create a pizza
 		pizza = new Pizza();
 		add(pizza);
+
+		// Create an oven
+		oven = new Oven(200, 500);
 
 		super.create();
 	}
@@ -47,7 +54,7 @@ class PlayState extends FlxState
 		**/
 		toppings.forEach((topping) ->
 		{
-			if (topping.draggableTopping != null)
+			if (topping.draggableTopping != null && topping.draggableTopping.alive == true)
 			{
 				draggedTopping = topping.draggableTopping;
 			}
@@ -61,6 +68,23 @@ class PlayState extends FlxState
 			FlxG.overlap(draggedTopping, pizza, addTopping, checkTopping) ? null : draggedTopping.kill();
 		}
 
+		/**
+			Iterate through all sauces to determine if a sauce must be added
+		**/
+		sauces.forEach((sauce) ->
+		{
+			if (sauce.addSauce)
+			{
+				pizza.addTopping(sauce.value);
+				sauce.addSauce = false;
+			}
+		});
+
+		// Only check for overlapping if the pizza is not being dragged
+		if (pizza.isDragged == false)
+		{
+			FlxG.overlap(oven, pizza, cookPizza);
+		}
 		super.update(elapsed);
 	}
 
@@ -73,8 +97,8 @@ class PlayState extends FlxState
 		if (FlxG.pixelPerfectOverlap(topping, pizza))
 		{
 			pizza.addTopping(topping.value);
-			topping.kill();
-		};
+		}
+		topping.kill();
 	}
 
 	function checkTopping(topping:Topping, pizza:Pizza)
@@ -87,5 +111,35 @@ class PlayState extends FlxState
 		{
 			return true;
 		}
+	}
+
+	/**
+		Creates a new topping with the given ToppingEnum and x,y coordinates
+	**/
+	function createTopping(topping:ToppingEnum, x:Float, y:Float)
+	{
+		toppings.add(new Topping(topping, x, y));
+	}
+
+	/**
+		Creates a new sauce with given ToppingEnum and x,y coordinates
+	**/
+	function createSauce(sauce:ToppingEnum, x:Float, y:Float)
+	{
+		var sauce = new Sauce(sauce, x, y);
+		sauces.add(sauce);
+	}
+
+	/**
+		Moves the pizza and makes it invisible, then calls the cookPizza function
+			from the Oven class to cook the pizza
+	**/
+	function cookPizza(oven:Oven, pizza:Pizza)
+	{
+		// We must immediately move the pizza to its finished position and make it invisible
+		// Some how the overlap is still triggered 4 times before this runs.
+		pizza.x = oven.x + 800; // move to the right of pizza, this can be changed
+		pizza.visible = false;
+		oven.cookPizza(pizza);
 	}
 }

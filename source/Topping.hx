@@ -15,22 +15,22 @@ class Topping extends FlxExtendedSprite
 {
 	public var spritesheet:FlxAtlasFrames;
 	public var draggableTopping:Topping;
-
-	public var value: ToppingEnum;
+	public var value:ToppingEnum;
 
 	/**
 		@param value ToppingEnum - the type of the topping i.e pepperoni, mozarella, skittles, etc.
-		@param spritesheet  FlxAtlasFrames - spritesheet containing an image for topping while:
-		 	it's in the container
-			it's being dragged
-		 	it's on the pizza
+		@param x Int - the x coordinate of the topping
+		@param y Int - the y coordinate of the topping
 	 */
-	public function new(value:String, spritesheet:FlxAtlasFrames, dragged = false)
+	public function new(value:ToppingEnum, x:Float, y:Float)
 	{
 		super();
 		this.value = value;
-		this.spritesheet = spritesheet;
-		frames = this.spritesheet;
+		this.x = x;
+		this.y = y;
+		this.loadGraphic("assets/images/ingredients/" + value + ".png");
+		this.draggableTopping = null;
+		this.enableMouseClicks(false);
 	}
 
 	#if FLX_MOUSE
@@ -43,17 +43,23 @@ class Topping extends FlxExtendedSprite
 
 		if (clickable == true && _clickOnRelease == false)
 		{
-			// Initialize the draggable topping and set the proper frame.
-			draggableTopping = new Topping(this.value, this.spritesheet, true);
-
-			draggableTopping.frame = draggableTopping.frames.getByIndex(1);
+			// First check if the sprite is already created but dead
+			if (draggableTopping != null && draggableTopping.alive == false)
+			{
+				draggableTopping.reset(this.x, this.y);
+			}
+			else
+			{
+				// Initialize the draggable topping and set the dragging image.
+				draggableTopping = new Topping(this.value, this.x, this.y);
+				draggableTopping.loadGraphic("assets/images/drag-n-drop/" + this.value + "_clump.png");
+				// Add the topping to the display
+				FlxG.state.add(draggableTopping);
+			}
 			draggableTopping.enableMouseDrag();
 			draggableTopping.isDragged = true;
 			draggableTopping._dragOffsetX = 30;
 			draggableTopping._dragOffsetY = 30;
-
-			// Add the topping to the display
-			FlxG.state.add(draggableTopping);
 		}
 
 		if (mousePressedCallback != null)
@@ -68,12 +74,12 @@ class Topping extends FlxExtendedSprite
 	override public function mouseReleasedHandler():Void
 	{
 		isPressed = false;
+
 		// Stop dragging the draggable topping
 		if (draggableTopping.isDragged == true)
 		{
 			draggableTopping.stopDrag();
 		}
-		
 
 		if (mouseReleasedCallback != null)
 		{
@@ -81,32 +87,13 @@ class Topping extends FlxExtendedSprite
 		}
 	}
 	#end
-
-	/**
-	 * Core update loop
-	 */
-	override public function update(elapsed:Float):Void
-	{
-		#if FLX_MOUSE
-		if (draggable == true && isDragged == true)
-		{
-			updateDrag();
-		}
-
-		if (isPressed == false && FlxG.mouse.justPressed)
-		{
-			checkForClick();
-		}
-		#end
-
-		super.update(elapsed);
-	}
 }
 
- /**
-  * Available toppings for the pizza
-  */
- enum ToppingEnum {
+/**
+ * Available toppings for the pizza
+ */
+enum ToppingEnum
+{
 	pepperoni;
 	mushroom;
 	yellow_cheese;
