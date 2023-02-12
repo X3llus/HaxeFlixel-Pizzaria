@@ -30,6 +30,7 @@ class Topping extends FlxExtendedSprite
 		this.y = y;
 		this.loadGraphic("assets/images/ingredients/" + value + ".png");
 		this.draggableTopping = null;
+		this.enableMouseClicks(false);
 	}
 
 	#if FLX_MOUSE

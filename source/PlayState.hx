@@ -5,10 +5,12 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.plugin.FlxMouseControl;
 import flixel.group.FlxGroup;
+import flixel.input.mouse.FlxMouseEventManager;
 
 class PlayState extends FlxState
 {
 	var toppings:FlxTypedGroup<Topping>;
+	var sauces:FlxTypedGroup<Sauce>;
 	var pizza:Pizza;
 
 	public var draggedTopping:Topping;
@@ -17,6 +19,7 @@ class PlayState extends FlxState
 	{
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
+		FlxG.plugins.add(new FlxMouseEventManager());
 
 		// Create a group of toppings
 		toppings = new FlxTypedGroup<Topping>();
@@ -25,12 +28,15 @@ class PlayState extends FlxState
 		createTopping(yellow_cheese, 200, 600);
 		createTopping(white_cheese, 300, 600);
 
-		add(toppings);
-		toppings.forEach((topping) ->
-		{
-			topping.enableMouseClicks(false); // = true;
-		});
+		// Create a group of sauces
+		sauces = new FlxTypedGroup<Sauce>();
+		createSauce(dark_sauce, 400, 600);
+		createSauce(light_sauce, 500, 600);
 
+		add(toppings);
+		add(sauces);
+
+		// Create a pizza
 		pizza = new Pizza();
 		add(pizza);
 
@@ -59,6 +65,14 @@ class PlayState extends FlxState
 			FlxG.overlap(draggedTopping, pizza, addTopping, checkTopping) ? null : draggedTopping.kill();
 		}
 
+		sauces.forEach((sauce) ->
+		{
+			if (sauce.addSauce)
+			{
+				pizza.addTopping(sauce.value);
+				sauce.addSauce = false;
+			}
+		});
 		super.update(elapsed);
 	}
 
@@ -87,8 +101,17 @@ class PlayState extends FlxState
 		}
 	}
 
+	/**
+		Creates a new topping with the given ToppingEnum and x,y coordinates
+	**/
 	function createTopping(topping:ToppingEnum, x:Float, y:Float)
 	{
 		toppings.add(new Topping(topping, x, y));
+	}
+
+	function createSauce(sauce:ToppingEnum, x:Float, y:Float)
+	{
+		var sauce = new Sauce(sauce, x, y);
+		sauces.add(sauce);
 	}
 }
