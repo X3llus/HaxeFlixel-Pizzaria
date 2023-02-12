@@ -149,6 +149,7 @@ class PlayState extends FlxState
 		pizza.x = oven.x + 800; // move to the right of pizza, this can be changed
 		pizza.visible = false;
 		oven.cookPizza(pizza);
+		pizza.updateGraphic();
 	}
 
 	/**
@@ -161,5 +162,6 @@ class PlayState extends FlxState
 		pizza.cooked = false;
 		for (i in 0...pizza.toppings.length)
 			pizza.toppings.shift();
+		pizza.updateGraphic();
 	}
 }

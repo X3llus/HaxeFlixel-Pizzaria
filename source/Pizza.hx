@@ -37,33 +37,43 @@ class Pizza extends FlxExtendedSprite
 	{
 		toppings.push(topping);
 		trace(toppings);
-		updateToppings();
+		updateGraphic();
 	}
 
 	/**
 	 * Update Pizza graphic based on the current toppings
 	 */
-	function updateToppings()
+	public function updateGraphic()
 	{
+		if (toppings.length == 0)
+		{
+			loadGraphic(AssetPaths.round_dough__png);
+			return;
+		}
 		// ? The file name of the asset to display
 		var asset = "assets/images/pizzas/";
+
 		if (cooked)
-			asset += "cooked/cooked-";
+			asset += "cooked-";
 		else
 			asset += "raw/raw-";
-		// so far only 1 variab=nt for sauce colours for cooked pizza
-		if (toppings.contains(ToppingEnum.light_sauce) && !toppings.contains(ToppingEnum.cooked))
-			asset += "-ls";
+
+		// so far only 1 variant for sauce colours for cooked pizza
+		if (toppings.contains(ToppingEnum.light_sauce) && !cooked)
+			asset += "ls";
 		else if (toppings.contains(ToppingEnum.dark_sauce))
-			asset += "-ds";
+			asset += "ds";
+		
 		if (toppings.contains(ToppingEnum.yellow_cheese))
-			asset += "-yc";
+			asset += "yc";
 		else if (toppings.contains(ToppingEnum.white_cheese))
-			asset += "-wc";
+			asset += "wc";
+		
 		if (toppings.contains(ToppingEnum.mushroom))
-			asset += "-m";
+			asset += "m";
 		if (toppings.contains(ToppingEnum.pepperoni))
-			asset += "-p";
+			asset += "p";
+
 		asset += ".png";
 		loadGraphic(asset, false, 100, 100);
 	}
