@@ -20,7 +20,6 @@ class PlayState extends FlxState
 	{
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
-		FlxG.plugins.add(new FlxMouseEventManager());
 
 		// Create a group of toppings
 		toppings = new FlxTypedGroup<Topping>();
