@@ -20,7 +20,7 @@ class ApplicationMain
 
 		#if (js && html5)
 		#if (munit || utest)
-		lime.system.System.embed("HaxeFlixel_Pizzaria", null, 640, 480);
+		lime.system.System.embed("HaxeFlixel_Pizzaria", null, 1920, 1080);
 		#end
 		#else
 		create(null);
@@ -35,7 +35,7 @@ class ApplicationMain
 		ManifestResources.init(config);
 		#end
 
-		app.meta["build"] = "5";
+		app.meta["build"] = "30";
 		app.meta["company"] = "HaxeFlixel";
 		app.meta["file"] = "HaxeFlixel_Pizzaria";
 		app.meta["name"] = "HaxeFlixel_Pizzaria";
@@ -49,26 +49,26 @@ class ApplicationMain
 		var attributes:lime.ui.WindowAttributes = {
 			allowHighDPI: true,
 			alwaysOnTop: false,
-			borderless: false,
+			borderless: true,
 			// display: 0,
 			element: null,
 			frameRate: 60,
 			#if !web fullscreen: false, #end
-			height: 480,
+			height: 1080,
 			hidden: #if munit true #else false #end,
 			maximized: false,
 			minimized: false,
 			parameters: {},
-			resizable: false,
+			resizable: true,
 			title: "HaxeFlixel_Pizzaria",
-			width: 640,
+			width: 1920,
 			x: null,
 			y: null,
 		};
 
 		attributes.context = {
 			antialiasing: 0,
-			background: 0,
+			background: null,
 			colorDepth: 32,
 			depth: true,
 			hardware: true,
@@ -102,7 +102,7 @@ class ApplicationMain
 		app.createWindow(attributes);
 		
 		#elseif !air
-		app.window.context.attributes.background = 0;
+		app.window.context.attributes.background = null;
 		app.window.frameRate = 60;
 		#end
 

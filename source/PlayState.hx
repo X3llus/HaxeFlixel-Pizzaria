@@ -1,5 +1,6 @@
 package;
 
+import Topping.ToppingEnum;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -11,8 +12,9 @@ import flixel.group.FlxGroup;
 class PlayState extends FlxState
 {
 	var toppings:FlxTypedGroup<Topping>;
-	var draggedTopping:Topping;
 	var pizza:Pizza;
+
+	public var draggedTopping:Topping;
 
 	override public function create()
 	{
@@ -21,11 +23,15 @@ class PlayState extends FlxState
 
 		// Create a group of toppings
 		toppings = new FlxTypedGroup<Topping>();
+		createTopping(pepperoni, 0, 600);
+		createTopping(mushroom, 100, 600);
+		createTopping(yellow_cheese, 200, 600);
+		createTopping(white_cheese, 300, 600);
 
-		var atlasFrame = FlxAtlasFrames.fromTexturePackerJson(AssetPaths.pepperoni_spritesheet__png, AssetPaths.pepperoni_spritesheet__json);
-		var pepperoni = new Topping("Pepperoni", atlasFrame);
-		pepperoni.frame = pepperoni.frames.getByIndex(0);
-		toppings.add(pepperoni);
+		// var atlasFrame = FlxAtlasFrames.fromTexturePackerJson(AssetPaths.pepperoni_spritesheet__png, AssetPaths.pepperoni_spritesheet__json);
+		// var pepperoni = new Topping("Pepperoni", atlasFrame);
+		// pepperoni.frame = pepperoni.frames.getByIndex(0);
+		// toppings.add(pepperoni);
 
 		add(toppings);
 		toppings.forEach((topping) ->
@@ -47,7 +53,7 @@ class PlayState extends FlxState
 		**/
 		toppings.forEach((topping) ->
 		{
-			if (topping.draggableTopping != null)
+			if (topping.draggableTopping != null && topping.draggableTopping.alive == true)
 			{
 				draggedTopping = topping.draggableTopping;
 			}
@@ -73,8 +79,8 @@ class PlayState extends FlxState
 		if (FlxG.pixelPerfectOverlap(topping, pizza))
 		{
 			pizza.addTopping(topping.value);
-			topping.kill();
-		};
+		}
+		topping.kill();
 	}
 
 	function checkTopping(topping:Topping, pizza:Pizza)
@@ -87,5 +93,10 @@ class PlayState extends FlxState
 		{
 			return true;
 		}
+	}
+
+	function createTopping(topping:ToppingEnum, x:Float, y:Float)
+	{
+		toppings.add(new Topping(topping, x, y));
 	}
 }

@@ -78,7 +78,6 @@ class Pizza extends FlxExtendedSprite
 	// 	var imgUrl = "assets/images/pizza" + size + ".png";
 	// 	this.loadGraphic(imgUrl);
 	// }
-
 	/**
 		Loads the "on pizza" graphic for the given ingredient.
 		ingredient:String - must be one of the ingredients in the game
@@ -93,7 +92,4 @@ class Pizza extends FlxExtendedSprite
 	// 	sprite.angle = rand.float(1, 360);
 	// 	FlxG.state.add(sprite);
 	// }
-
-
-	
 }
