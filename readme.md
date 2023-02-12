@@ -6,6 +6,7 @@
 
 ## Credits
 
+- Customer sprites from [the sprite resource](https://www.spriters-resource.com/playstation/charumera/sheet/76116/)
 - Sound Effects from [Pixabay](https://pixabay.com/?utm_source=link-attribution)
   - [success](https://pixabay.com/sound-effects/yay-6120/)
   - [fail](https://pixabay.com/sound-effects/negative-beeps-6008/)
