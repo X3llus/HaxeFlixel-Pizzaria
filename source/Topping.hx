@@ -13,21 +13,22 @@ import flixel.graphics.frames.FlxAtlasFrames;
 **/
 class Topping extends FlxExtendedSprite
 {
-	public var name:String;
 	public var spritesheet:FlxAtlasFrames;
 	public var draggableTopping:Topping;
 
+	public var value: ToppingEnum;
+
 	/**
-		name:String - name of the topping i.e pepperoni, mozarella, skittles, etc.
-		spritesheet:FlxAtlasFrames - spritesheet containing an image for topping while:
-		 it's in the container
-		 it's being dragged
-		 it's on the pizza
-	**/
-	public function new(name:String, spritesheet:FlxAtlasFrames, dragged = false)
+		@param value ToppingEnum - the type of the topping i.e pepperoni, mozarella, skittles, etc.
+		@param spritesheet  FlxAtlasFrames - spritesheet containing an image for topping while:
+		 	it's in the container
+			it's being dragged
+		 	it's on the pizza
+	 */
+	public function new(value:String, spritesheet:FlxAtlasFrames, dragged = false)
 	{
 		super();
-		this.name = name;
+		this.value = value;
 		this.spritesheet = spritesheet;
 		frames = this.spritesheet;
 	}
@@ -43,7 +44,7 @@ class Topping extends FlxExtendedSprite
 		if (clickable == true && _clickOnRelease == false)
 		{
 			// Initialize the draggable topping and set the proper frame.
-			draggableTopping = new Topping(this.name, this.spritesheet, true);
+			draggableTopping = new Topping(this.value, this.spritesheet, true);
 
 			draggableTopping.frame = draggableTopping.frames.getByIndex(1);
 			draggableTopping.enableMouseDrag();
@@ -100,4 +101,18 @@ class Topping extends FlxExtendedSprite
 
 		super.update(elapsed);
 	}
+}
+
+ /**
+  * Available toppings for the pizza
+  */
+ enum ToppingEnum {
+	pepperoni;
+	mushroom;
+	yellow_cheese;
+	white_cheese;
+	light_sauce;
+	dark_sauce;
+	cooked;
+	raw;
 }

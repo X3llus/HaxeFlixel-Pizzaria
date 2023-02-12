@@ -1,5 +1,6 @@
 package;
 
+import Topping.ToppingEnum;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxExtendedSprite;
@@ -12,7 +13,7 @@ class Pizza extends FlxExtendedSprite
 		sauce
 		bake level
 	**/
-	public var toppings:Array<String>;
+	public var toppings:Array<ToppingEnum>;
 
 	public var sauce:String;
 	public var bake:String;
@@ -26,17 +27,46 @@ class Pizza extends FlxExtendedSprite
 		this.loadGraphic(imgUrl);
 		x = 200;
 		y = 200;
-		this.toppings = new Array<String>();
+		this.toppings = new Array<ToppingEnum>();
 		enableMouseDrag();
 	}
 
 	/**
 		topping:String - any of the toppings in the game
 	**/
-	public function addTopping(topping:String)
+	public function addTopping(topping:ToppingEnum)
 	{
 		toppings.push(topping);
 		trace(toppings);
+		updateToppings();
+	}
+
+	/**
+	 * Update Pizza graphic based on the current toppings
+	 */
+	function updateToppings()
+	{
+		// ? The file name of the asset to display
+		var asset = "assets/images/";
+		if (toppings.contains(ToppingEnum.cooked))
+			asset += "cooked/cooked";
+		else if (toppings.contains(ToppingEnum.raw))
+			asset += "raw/raw";
+		// so far only 1 variab=nt for sauce colours for cooked pizza
+		if (toppings.contains(ToppingEnum.light_sauce) && !toppings.contains(ToppingEnum.cooked))
+			asset += "-ls";
+		else if (toppings.contains(ToppingEnum.dark_sauce))
+			asset += "-ds";
+		if (toppings.contains(ToppingEnum.yellow_cheese))
+			asset += "-yc";
+		else if (toppings.contains(ToppingEnum.white_cheese))
+			asset += "-wc";
+		if (toppings.contains(ToppingEnum.mushroom))
+			asset += "-m";
+		if (toppings.contains(ToppingEnum.pepperoni))
+			asset += "-p";
+		asset += ".png";
+		loadGraphic(asset, false, 100, 100);
 	}
 
 	/**
@@ -48,6 +78,7 @@ class Pizza extends FlxExtendedSprite
 	// 	var imgUrl = "assets/images/pizza" + size + ".png";
 	// 	this.loadGraphic(imgUrl);
 	// }
+
 	/**
 		Loads the "on pizza" graphic for the given ingredient.
 		ingredient:String - must be one of the ingredients in the game
@@ -62,4 +93,7 @@ class Pizza extends FlxExtendedSprite
 	// 	sprite.angle = rand.float(1, 360);
 	// 	FlxG.state.add(sprite);
 	// }
+
+
+	
 }

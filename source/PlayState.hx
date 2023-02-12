@@ -72,7 +72,7 @@ class PlayState extends FlxState
 	{
 		if (FlxG.pixelPerfectOverlap(topping, pizza))
 		{
-			pizza.addTopping(topping.name);
+			pizza.addTopping(topping.value);
 			topping.kill();
 		};
 	}
