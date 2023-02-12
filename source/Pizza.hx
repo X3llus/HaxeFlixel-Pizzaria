@@ -11,12 +11,12 @@ class Pizza extends FlxExtendedSprite
 	/**
 		toppings
 		sauce
-		bake level
+		cooked
 	**/
 	public var toppings:Array<ToppingEnum>;
 
 	public var sauce:String;
-	public var bake:String;
+	public var cooked:Bool;
 
 	public function new()
 	{
@@ -25,6 +25,7 @@ class Pizza extends FlxExtendedSprite
 		this.loadGraphic(imgUrl);
 		x = 200;
 		y = 200;
+		this.cooked = false;
 		this.toppings = new Array<ToppingEnum>();
 		enableMouseDrag();
 	}

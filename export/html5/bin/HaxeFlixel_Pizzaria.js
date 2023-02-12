@@ -915,7 +915,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "33";
+	app.meta.h["build"] = "34";
 	app.meta.h["company"] = "HaxeFlixel";
 	app.meta.h["file"] = "HaxeFlixel_Pizzaria";
 	app.meta.h["name"] = "HaxeFlixel_Pizzaria";
@@ -7662,6 +7662,37 @@ flixel_FlxSprite.prototype = $extend(flixel_FlxObject.prototype,{
 	,__class__: flixel_FlxSprite
 	,__properties__: $extend(flixel_FlxObject.prototype.__properties__,{set_clipRect:"set_clipRect",set_color:"set_color",set_blend:"set_blend",set_flipY:"set_flipY",set_flipX:"set_flipX",set_facing:"set_facing",set_alpha:"set_alpha",set_graphic:"set_graphic",set_frames:"set_frames",set_frame:"set_frame",set_pixels:"set_pixels",get_pixels:"get_pixels",set_antialiasing:"set_antialiasing",set_useFramePixels:"set_useFramePixels"})
 });
+var Oven = function(x,y) {
+	flixel_FlxSprite.call(this);
+	this.set_x(x);
+	this.set_y(y);
+	this.scale.set_x(2);
+	this.scale.set_y(2);
+	this.updateHitbox();
+	this.ovenEmpty = true;
+	this.loadGraphic("assets/images/environment/oven.png");
+	flixel_FlxG.game._state.add(this);
+};
+$hxClasses["Oven"] = Oven;
+Oven.__name__ = "Oven";
+Oven.__super__ = flixel_FlxSprite;
+Oven.prototype = $extend(flixel_FlxSprite.prototype,{
+	ovenEmpty: null
+	,pizza: null
+	,cookPizza: function(pizza) {
+		this.pizza = pizza;
+		this.loadGraphic("assets/images/environment/oven-closed.png");
+		var timer = new flixel_util_FlxTimer();
+		timer.start(6.0,$bind(this,this.updatePizza),1);
+	}
+	,updatePizza: function(_) {
+		this.pizza.cooked = true;
+		this.loadGraphic("assets/images/environment/oven.png");
+		haxe_Log.trace("pizza cooked",{ fileName : "source/Oven.hx", lineNumber : 44, className : "Oven", methodName : "updatePizza"});
+		this.pizza.set_visible(true);
+	}
+	,__class__: Oven
+});
 var flixel_addons_display_FlxExtendedSprite = function(X,Y,SimpleGraphic) {
 	if(Y == null) {
 		Y = 0;
@@ -8140,6 +8171,7 @@ var Pizza = function() {
 	this.loadGraphic(imgUrl);
 	this.set_x(200);
 	this.set_y(200);
+	this.cooked = false;
 	this.toppings = [];
 	this.enableMouseDrag();
 };
@@ -8149,10 +8181,10 @@ Pizza.__super__ = flixel_addons_display_FlxExtendedSprite;
 Pizza.prototype = $extend(flixel_addons_display_FlxExtendedSprite.prototype,{
 	toppings: null
 	,sauce: null
-	,bake: null
+	,cooked: null
 	,addTopping: function(topping) {
 		this.toppings.push(topping);
-		haxe_Log.trace(this.toppings,{ fileName : "source/Pizza.hx", lineNumber : 38, className : "Pizza", methodName : "addTopping"});
+		haxe_Log.trace(this.toppings,{ fileName : "source/Pizza.hx", lineNumber : 39, className : "Pizza", methodName : "addTopping"});
 		this.updateToppings();
 	}
 	,updateToppings: function() {
@@ -8851,6 +8883,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	toppings: null
 	,sauces: null
 	,pizza: null
+	,oven: null
 	,draggedTopping: null
 	,create: function() {
 		flixel_FlxG.plugins.list.push(new flixel_addons_plugin_FlxMouseControl());
@@ -8860,13 +8893,14 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.createTopping(ToppingEnum.mushroom,100,600);
 		this.createTopping(ToppingEnum.yellow_cheese,200,600);
 		this.createTopping(ToppingEnum.white_cheese,300,600);
+		this.add(this.toppings);
 		this.sauces = new flixel_group_FlxTypedGroup();
 		this.createSauce(ToppingEnum.dark_sauce,400,600);
 		this.createSauce(ToppingEnum.light_sauce,500,600);
-		this.add(this.toppings);
 		this.add(this.sauces);
 		this.pizza = new Pizza();
 		this.add(this.pizza);
+		this.oven = new Oven(200,500);
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,update: function(elapsed) {
@@ -8887,6 +8921,9 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				sauce.addSauce = false;
 			}
 		});
+		if(this.pizza.isDragged == false) {
+			flixel_FlxG.overlap(this.oven,this.pizza,$bind(this,this.cookPizza));
+		}
 		flixel_FlxState.prototype.update.call(this,elapsed);
 	}
 	,addTopping: function(topping,pizza) {
@@ -8908,6 +8945,11 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,createSauce: function(sauce,x,y) {
 		var sauce1 = new Sauce(sauce,x,y);
 		this.sauces.add(sauce1);
+	}
+	,cookPizza: function(oven,pizza) {
+		pizza.set_x(oven.x + 800);
+		pizza.set_visible(false);
+		oven.cookPizza(pizza);
 	}
 	,__class__: PlayState
 });
@@ -73189,7 +73231,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 399749;
+	this.version = 433501;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
