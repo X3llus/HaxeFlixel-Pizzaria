@@ -2,11 +2,8 @@ package;
 
 import Topping.ToppingEnum;
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxExtendedSprite;
 import flixel.addons.plugin.FlxMouseControl;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
 
 class PlayState extends FlxState
@@ -27,11 +24,6 @@ class PlayState extends FlxState
 		createTopping(mushroom, 100, 600);
 		createTopping(yellow_cheese, 200, 600);
 		createTopping(white_cheese, 300, 600);
-
-		// var atlasFrame = FlxAtlasFrames.fromTexturePackerJson(AssetPaths.pepperoni_spritesheet__png, AssetPaths.pepperoni_spritesheet__json);
-		// var pepperoni = new Topping("Pepperoni", atlasFrame);
-		// pepperoni.frame = pepperoni.frames.getByIndex(0);
-		// toppings.add(pepperoni);
 
 		add(toppings);
 		toppings.forEach((topping) ->

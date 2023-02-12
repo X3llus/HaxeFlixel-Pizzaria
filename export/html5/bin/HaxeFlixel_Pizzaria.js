@@ -915,7 +915,7 @@ ApplicationMain.main = function() {
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	ManifestResources.init(config);
-	app.meta.h["build"] = "31";
+	app.meta.h["build"] = "32";
 	app.meta.h["company"] = "HaxeFlixel";
 	app.meta.h["file"] = "HaxeFlixel_Pizzaria";
 	app.meta.h["name"] = "HaxeFlixel_Pizzaria";
@@ -8152,7 +8152,7 @@ Pizza.prototype = $extend(flixel_addons_display_FlxExtendedSprite.prototype,{
 	,bake: null
 	,addTopping: function(topping) {
 		this.toppings.push(topping);
-		haxe_Log.trace(this.toppings,{ fileName : "source/Pizza.hx", lineNumber : 40, className : "Pizza", methodName : "addTopping"});
+		haxe_Log.trace(this.toppings,{ fileName : "source/Pizza.hx", lineNumber : 38, className : "Pizza", methodName : "addTopping"});
 		this.updateToppings();
 	}
 	,updateToppings: function() {

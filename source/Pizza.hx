@@ -18,8 +18,6 @@ class Pizza extends FlxExtendedSprite
 	public var sauce:String;
 	public var bake:String;
 
-	// public var rand:FlxRandom;
-
 	public function new()
 	{
 		super();
@@ -68,28 +66,4 @@ class Pizza extends FlxExtendedSprite
 		asset += ".png";
 		loadGraphic(asset, false, 100, 100);
 	}
-
-	/**
-		Loads the appropraitely sized pizza.
-		size:String - small, medium, large
-	**/
-	// function loadPizzaGraphic(size:String)
-	// {
-	// 	var imgUrl = "assets/images/pizza" + size + ".png";
-	// 	this.loadGraphic(imgUrl);
-	// }
-	/**
-		Loads the "on pizza" graphic for the given ingredient.
-		ingredient:String - must be one of the ingredients in the game
-	**/
-	// function addIngredientGraphic(ingredient:String)
-	// {
-	// 	var sprite = new FlxSprite();
-	// 	rand = new FlxRandom();
-	// 	sprite.loadGraphic("assets/images/" + ingredient.toLowerCase() + "3.png");
-	// 	sprite.x = this.x;
-	// 	sprite.y = this.y;
-	// 	sprite.angle = rand.float(1, 360);
-	// 	FlxG.state.add(sprite);
-	// }
 }

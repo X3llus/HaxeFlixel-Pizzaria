@@ -42,16 +42,15 @@ class Topping extends FlxExtendedSprite
 
 		if (clickable == true && _clickOnRelease == false)
 		{
+			// First check if the sprite is already created but dead
 			if (draggableTopping != null && draggableTopping.alive == false)
 			{
 				draggableTopping.reset(this.x, this.y);
 			}
 			else
 			{
-				// Initialize the draggable topping and set the proper frame.
+				// Initialize the draggable topping and set the dragging image.
 				draggableTopping = new Topping(this.value, this.x, this.y);
-
-				// draggableTopping.frame = draggableTopping.frames.getByIndex(1);
 				draggableTopping.loadGraphic("assets/images/drag-n-drop/" + this.value + "_clump.png");
 				// Add the topping to the display
 				FlxG.state.add(draggableTopping);
