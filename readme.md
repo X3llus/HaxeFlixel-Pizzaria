@@ -3,6 +3,7 @@
 ## Pizzeria
 
 - [Plan](https://docs.google.com/document/d/1VT0l-BPCHmUzkPmvAOZ16UHmFfPRfBguP4BChZz5ads/edit?usp=sharing)
+- [Presentation](https://docs.google.com/presentation/d/1Lbtnpekqta0GhgQGEd2xa0ATVHkU-9qdP1rS8VDC8LE/edit?usp=sharing)
 
 ## Credits
 
