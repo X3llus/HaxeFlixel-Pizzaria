@@ -46,11 +46,11 @@ class Pizza extends FlxExtendedSprite
 	function updateToppings()
 	{
 		// ? The file name of the asset to display
-		var asset = "assets/images/";
-		if (toppings.contains(ToppingEnum.cooked))
-			asset += "cooked/cooked";
-		else if (toppings.contains(ToppingEnum.raw))
-			asset += "raw/raw";
+		var asset = "assets/images/pizzas/";
+		if (cooked)
+			asset += "cooked/cooked-";
+		else
+			asset += "raw/raw-";
 		// so far only 1 variab=nt for sauce colours for cooked pizza
 		if (toppings.contains(ToppingEnum.light_sauce) && !toppings.contains(ToppingEnum.cooked))
 			asset += "-ls";
