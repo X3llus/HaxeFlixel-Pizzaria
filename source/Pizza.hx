@@ -23,7 +23,7 @@ class Pizza extends FlxExtendedSprite
 	public function new()
 	{
 		super();
-		var imgUrl = "assets/images/round-dough.png";
+		var imgUrl = "assets/images/pizzas/round-dough.png";
 		this.loadGraphic(imgUrl);
 		x = 200;
 		y = 200;
