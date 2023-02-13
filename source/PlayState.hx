@@ -44,12 +44,14 @@ class PlayState extends FlxState
 		// createSauce(light_sauce, 500, 600);
 		// add(sauces);
 
-		pizzaToppings = new FlxGroup();
-		add(pizzaToppings);
 
 		// Create a pizza
 		pizza = new Pizza(pizzaToppings);
 		add(pizza);
+		//place ingrdient spirte over the pizza
+		pizzaToppings = new FlxGroup();
+		add(pizzaToppings);
+
 
 		// Create an oven
 		oven = new Oven(200, 500);
