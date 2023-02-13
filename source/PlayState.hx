@@ -10,7 +10,6 @@ import flixel.input.mouse.FlxMouseEventManager;
 class PlayState extends FlxState
 {
 	var toppings:FlxTypedGroup<Topping>;
-	var sauces:FlxTypedGroup<Sauce>;
 	var pizza:Pizza;
 	var oven:Oven;
 
@@ -30,12 +29,6 @@ class PlayState extends FlxState
 		createTopping(dark_sauce, 400, 600);
 		createTopping(light_sauce, 500, 600);
 		add(toppings);
-
-		// Create a group of sauces
-		// sauces = new FlxTypedGroup<Sauce>();
-		// createSauce(dark_sauce, 400, 600);
-		// createSauce(light_sauce, 500, 600);
-		// add(sauces);
 
 		// Create a pizza
 		pizza = new Pizza();
@@ -68,18 +61,6 @@ class PlayState extends FlxState
 			// don't do anything on overlap true return, kill sprite on false overlap return
 			FlxG.overlap(draggedTopping, pizza, addTopping, checkTopping) ? null : draggedTopping.kill();
 		}
-
-		/**
-			Iterate through all sauces to determine if a sauce must be added
-		**/
-		// sauces.forEach((sauce) ->
-		// {
-		// 	if (sauce.addSauce)
-		// 	{
-		// 		pizza.addTopping(sauce.value);
-		// 		sauce.addSauce = false;
-		// 	}
-		// });
 
 		// Only check for overlapping if the pizza is not being dragged
 		if (pizza.isDragged == false)
@@ -120,15 +101,6 @@ class PlayState extends FlxState
 	function createTopping(topping:ToppingEnum, x:Float, y:Float)
 	{
 		toppings.add(new Topping(topping, x, y));
-	}
-
-	/**
-		Creates a new sauce with given ToppingEnum and x,y coordinates
-	**/
-	function createSauce(sauce:ToppingEnum, x:Float, y:Float)
-	{
-		var sauce = new Sauce(sauce, x, y);
-		sauces.add(sauce);
 	}
 
 	/**
