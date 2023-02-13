@@ -1,3 +1,4 @@
+import Topping.ToppingEnum;
 import flixel.FlxSprite;
 import flixel.FlxG;
 
@@ -38,6 +39,35 @@ class AssetsUtil
 // ..##..##.....##.#########.##....##..##.............##
 // ..##..##.....##.##.....##.##....##..##.......##....##
 // .####.##.....##.##.....##..######...########..######.
+
+class ToppingSprite extends FlxSprite
+{
+	public function new(topping:ToppingEnum)
+	{
+		super();
+		switch topping
+		{
+			case ToppingEnum.pepperoni:
+				loadGraphic(AssetPaths.pepperoni_topping__png, false, 21, 21, false);
+				setGraphicSize(15, 0);
+			case ToppingEnum.mushroom:
+				loadGraphic(AssetPaths.mushroom_topping__png, false, 10, 9, false);
+				setGraphicSize(15, 0);
+				case ToppingEnum.yellow_cheese:
+				loadGraphic(AssetPaths.yellow_cheese_topping__png,100,100,false);
+				setGraphicSize(25,0);
+			case ToppingEnum.white_cheese:
+				loadGraphic(AssetPaths.white_cheese_topping__png,100,100,false);
+				setGraphicSize(25,0);
+			case ToppingEnum.light_sauce:
+				loadGraphic(AssetPaths.light_sauce_topping__png,73,69,false);
+				setGraphicSize(40,0);
+			case ToppingEnum.dark_sauce:
+				loadGraphic(AssetPaths.dark_sauce_topping__png,71,68,false);
+				setGraphicSize(40,0);
+		}
+	}
+}
 
 class CustomerSprite extends FlxSprite
 {

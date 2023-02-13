@@ -16,12 +16,13 @@ class PlayState extends FlxState
 	var pizza:Pizza;
 	var oven:Oven;
 	var trash:FlxSprite;
+	var pizzaToppings:FlxGroup;
 
 	public var draggedTopping:Topping;
 
 	override public function create()
 	{
-		//play bg music and loop
+		// play bg music and loop
 		AssetsUtil.playBGMusic(1);
 
 		// Adds the FlxMouseControl plugin - absolutely required
@@ -43,8 +44,11 @@ class PlayState extends FlxState
 		// createSauce(light_sauce, 500, 600);
 		// add(sauces);
 
+		pizzaToppings = new FlxGroup();
+		add(pizzaToppings);
+
 		// Create a pizza
-		pizza = new Pizza();
+		pizza = new Pizza(pizzaToppings);
 		add(pizza);
 
 		// Create an oven
