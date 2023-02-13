@@ -1,5 +1,7 @@
 package;
 
+import Assets.AssetsUtil;
+import flixel.FlxSprite;
 import Topping.ToppingEnum;
 import flixel.FlxG;
 import flixel.FlxState;
@@ -12,11 +14,15 @@ class PlayState extends FlxState
 	var toppings:FlxTypedGroup<Topping>;
 	var pizza:Pizza;
 	var oven:Oven;
+	var trash:FlxSprite;
 
 	public var draggedTopping:Topping;
 
 	override public function create()
 	{
+		//play bg music and loop
+		AssetsUtil.playBGMusic(0.35);
+
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
 
@@ -36,6 +42,10 @@ class PlayState extends FlxState
 
 		// Create an oven
 		oven = new Oven(200, 500);
+		add(oven);
+		// create trash sprite
+		trash = new FlxSprite(0, 500, "assets/images/environment/trash.png");
+		add(trash);
 
 		super.create();
 	}
@@ -66,6 +76,7 @@ class PlayState extends FlxState
 		if (pizza.isDragged == false)
 		{
 			FlxG.overlap(oven, pizza, cookPizza);
+			FlxG.overlap(trash, pizza, resetPizza);
 		}
 		super.update(elapsed);
 	}
@@ -114,5 +125,18 @@ class PlayState extends FlxState
 		pizza.x = oven.x + 800; // move to the right of pizza, this can be changed
 		pizza.visible = false;
 		oven.cookPizza(pizza);
+	}
+
+	/**
+	 * Move the pizza back to the starting position and remove all toppings
+	 */
+	function resetPizza(trash:FlxSprite, pizza:Pizza)
+	{
+		// move pizza back to the initial position
+		pizza.x = pizza.y = 200;
+		pizza.cooked = false;
+		for (i in 0...pizza.toppings.length)
+			pizza.toppings.shift();
+		pizza.updateGraphic();
 	}
 }

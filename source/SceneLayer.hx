@@ -1,6 +1,4 @@
 import flixel.FlxSprite;
-import flixel.group.FlxGroup;
-import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.group.FlxSpriteGroup;
 
 class SceneLayer extends FlxSpriteGroup

@@ -22,9 +22,10 @@ import flixel.system.FlxSound;
 		failSfx.play(true);
 	};
 	public static final bgMusic = FlxG.sound.load(AssetPaths.upbeat_funky_retro_131297__mp3);
-	public static final playBGMusic = (volume:Float = 1) -> {
+	public static final playBGMusic = (volume:Float = 1, loop:Bool = true) -> {
 		bgMusic.volume = volume;
 		bgMusic.play(true);
+		bgMusic.looped = loop;
 	};
 
 
