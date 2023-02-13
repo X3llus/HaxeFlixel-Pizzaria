@@ -21,7 +21,7 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		//play bg music and loop
-		AssetsUtil.playBGMusic(0.35);
+		AssetsUtil.playBGMusic(1);
 
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
