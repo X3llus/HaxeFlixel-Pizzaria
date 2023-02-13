@@ -11,7 +11,7 @@
 	},
 	"haxe.enableExtendedIndentation": true,
 	"nuxt.isNuxtApp": false,
-	"BracketHighlighter.enableExtension": false,
+	"BracketHighlighter.enableExtension": true,
 	"cmake.configureOnOpen": false,
 	"json.schemas": [
 		{
