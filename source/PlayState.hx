@@ -1,5 +1,6 @@
 package;
 
+import Assets.AssetsUtil;
 import flixel.FlxSprite;
 import Topping.ToppingEnum;
 import flixel.FlxG;
@@ -20,6 +21,9 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		//play bg music and loop
+		AssetsUtil.playBGMusic(0.35);
+
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
 
