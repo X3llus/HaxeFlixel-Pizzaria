@@ -9,5 +9,16 @@
 			"source.sortImports": true
 		}
 	},
-	"haxe.enableExtendedIndentation": true
+	"haxe.enableExtendedIndentation": true,
+	"nuxt.isNuxtApp": false,
+	"BracketHighlighter.enableExtension": true,
+	"cmake.configureOnOpen": false,
+	"json.schemas": [
+		{
+			"fileMatch": [
+				"pizzas.json"
+			],
+			"url": "assets/data/pizza.schema.json"
+		}
+	]
 }
