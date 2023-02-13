@@ -100,6 +100,4 @@ enum ToppingEnum
 	white_cheese;
 	light_sauce;
 	dark_sauce;
-	cooked;
-	raw;
 }
