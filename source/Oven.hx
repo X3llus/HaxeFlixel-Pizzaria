@@ -43,5 +43,7 @@ class Oven extends FlxSprite
 		this.loadGraphic("assets/images/environment/oven.png");
 		trace("pizza cooked");
 		pizza.visible = true; // Make the pizza visible again
+		// update the pizza's graphic now that the cooked status has changed
+		pizza.updateGraphic();
 	}
 }

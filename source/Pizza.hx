@@ -21,8 +21,7 @@ class Pizza extends FlxExtendedSprite
 	public function new()
 	{
 		super();
-		var imgUrl = "assets/images/pizzas/round-dough.png";
-		this.loadGraphic(imgUrl);
+		loadGraphic(AssetPaths.round_dough__png);
 		x = 200;
 		y = 200;
 		this.cooked = false;
@@ -50,31 +49,70 @@ class Pizza extends FlxExtendedSprite
 			loadGraphic(AssetPaths.round_dough__png);
 			return;
 		}
+		var hasCheese = toppings.contains(ToppingEnum.yellow_cheese) || toppings.contains(ToppingEnum.white_cheese);
+		var hasMushroom = toppings.contains(ToppingEnum.mushroom);
+		var hasPepperoni = toppings.contains(ToppingEnum.pepperoni);
+		var hasSauce = toppings.contains(ToppingEnum.light_sauce) || toppings.contains(ToppingEnum.dark_sauce);
+		var hasOnlyCheese = hasCheese && !hasMushroom && !hasPepperoni;
+		var hasOneTopping = (hasMushroom && !hasPepperoni) || (hasPepperoni && !hasMushroom); //XOr
+
 		// ? The file name of the asset to display
 		var asset = "assets/images/pizzas/";
-
+		var pizza = "";
 		if (cooked)
-			asset += "cooked-";
+			{
+				pizza+="cooked";
+				asset += "cooked/";}
 		else
-			asset += "raw/raw-";
+			{
+				pizza+="pizza";asset += "raw/";}
+
+		if(hasOnlyCheese && hasSauce)
+			asset+="cheese-only/"
+		else if(hasSauce &&hasOneTopping)
+			{
+				asset+="one-topping/";
+				if(!hasCheese)
+					asset+="no-cheese/";
+				else if(hasMushroom)
+					asset+="mushroom/";
+				else if(hasPepperoni)
+					asset+="pepperoni/";
+			}
+			else if(hasPepperoni && hasMushroom)
+			{
+				asset+="two-toppings/";
+			// so far only 1 variant for sauce colours for cooked pizza
+				if(!cooked){
+			if (!hasCheese)
+				asset += "no-cheese/";
+			else if (toppings.contains(ToppingEnum.light_sauce))
+				asset+="light-sauce/";
+			else if (toppings.contains(ToppingEnum.dark_sauce))
+				asset+="dark-sauce/";
+		}
+			}
+
 
 		// so far only 1 variant for sauce colours for cooked pizza
-		if (toppings.contains(ToppingEnum.light_sauce) && !cooked)
-			asset += "ls";
+			if(!cooked){
+		if (toppings.contains(ToppingEnum.light_sauce))
+			pizza += "-ls";
 		else if (toppings.contains(ToppingEnum.dark_sauce))
-			asset += "ds";
-		
-		if (toppings.contains(ToppingEnum.yellow_cheese))
-			asset += "yc";
-		else if (toppings.contains(ToppingEnum.white_cheese))
-			asset += "wc";
-		
-		if (toppings.contains(ToppingEnum.mushroom))
-			asset += "m";
-		if (toppings.contains(ToppingEnum.pepperoni))
-			asset += "p";
+			pizza += "-ds";
+	}
 
-		asset += ".png";
-		loadGraphic(asset, false, 100, 100);
+		if (toppings.contains(ToppingEnum.yellow_cheese))
+			pizza += "-yc";
+		else if (toppings.contains(ToppingEnum.white_cheese))
+			pizza += "-wc";
+
+		if (toppings.contains(ToppingEnum.pepperoni))
+			pizza += "-p";
+		if (toppings.contains(ToppingEnum.mushroom))
+			pizza += "-m";
+
+
+		loadGraphic(asset+pizza+".png", false, 100, 100);
 	}
 }
