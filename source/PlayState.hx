@@ -1,13 +1,16 @@
 package;
 
 import Assets.AssetsUtil;
-import flixel.FlxSprite;
 import Topping.ToppingEnum;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.display.FlxExtendedSprite;
 import flixel.addons.plugin.FlxMouseControl;
 import flixel.group.FlxGroup;
+import flixel.group.FlxSpriteGroup;
 import flixel.input.mouse.FlxMouseEventManager;
+import flixel.util.FlxTimer;
 
 class PlayState extends FlxState
 {
@@ -16,14 +19,16 @@ class PlayState extends FlxState
 	var pizza:Pizza;
 	var oven:Oven;
 	var trash:FlxSprite;
-	var pizzaToppings:FlxGroup;
 
 	public var draggedTopping:Topping;
 
+	public var pizzaToppings:FlxTypedGroup<FlxSprite>;
+
 	override public function create()
 	{
+		FlxG.debugger.visible = true;
 		// play bg music and loop
-		AssetsUtil.playBGMusic(1);
+		new AssetsUtil().playBGMusic(.32);
 
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
@@ -44,14 +49,12 @@ class PlayState extends FlxState
 		// createSauce(light_sauce, 500, 600);
 		// add(sauces);
 
-
+		pizzaToppings = new FlxTypedGroup<FlxSprite>();
 		// Create a pizza
 		pizza = new Pizza(pizzaToppings);
 		add(pizza);
-		//place ingrdient spirte over the pizza
-		pizzaToppings = new FlxGroup();
+		// place ingrdient spirte over the pizza
 		add(pizzaToppings);
-
 
 		// Create an oven
 		oven = new Oven(200, 500);
@@ -63,8 +66,11 @@ class PlayState extends FlxState
 		super.create();
 	}
 
+
 	override public function update(elapsed:Float)
 	{
+	
+
 		/**
 			Have to iterate through all the toppings to check if there is a
 			topping being dragged so that we can check for overlapping.

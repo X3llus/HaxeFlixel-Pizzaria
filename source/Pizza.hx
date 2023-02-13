@@ -18,12 +18,12 @@ class Pizza extends FlxExtendedSprite
 	public var toppings:Array<ToppingEnum>;
 
 	/** Reference to external container of this pizza's toppings */
-	private var toppingSprites:FlxGroup;
+	public var toppingSprites:FlxTypedGroup<FlxSprite>;
 
 	public var sauce:String;
 	public var cooked:Bool;
 
-	public function new(toppingGroup:FlxGroup)
+	public function new(toppingGroup:FlxTypedGroup<FlxSprite>)
 	{
 		super();
 		loadGraphic(AssetPaths.round_dough__png);
@@ -32,7 +32,17 @@ class Pizza extends FlxExtendedSprite
 		this.cooked = false;
 		this.toppings = new Array<ToppingEnum>();
 		enableMouseDrag();
+
 		toppingSprites = toppingGroup;
+		mouseStartDragCallback = (_, _, _) ->
+		{
+			toppingGroup.clear();
+			if (cooked)
+				loadGraphic(AssetPaths.pizzabox__png, false, 100, 100);
+			else
+				loadGraphic(AssetPaths.tray__png, false, 100, 100);
+		}
+		mouseStopDragCallback = (_, _, _) -> updateGraphic();
 	}
 
 	/**
@@ -55,21 +65,25 @@ class Pizza extends FlxExtendedSprite
 		else
 			loadGraphic(AssetPaths.round_dough__png, false, 100, 100, false);
 
+		toppingSprites.clear();
+
 		var tempTopping:ToppingSprite;
-		var padding = 5;
 		for (topping in toppings)
 		{
-			tempTopping = new ToppingSprite(topping);
-			// place topping randomly on top and within of the pizza
-			tempTopping.x = FlxG.random.float(x + padding, x + width - tempTopping.width - padding);
-			tempTopping.x = FlxG.random.float(y + padding, y + height - tempTopping.height - padding);
-			toppingSprites.add(tempTopping);
-		}
+			tempTopping = new ToppingSprite(topping, cooked);
 
-		if (toppings.length == 0)
-		{
-			toppingSprites.forEach(flxbasic -> flxbasic.kill(), true);
-			toppingSprites.clear();
+			// place cooked sauces in the center of the pizza
+			if (cooked&&(topping == ToppingEnum.dark_sauce || topping == ToppingEnum.light_sauce))
+			{
+				tempTopping.x = x + (width - tempTopping.width) / 2;
+				tempTopping.y = y + (height - tempTopping.height) / 2;
+			}
+			else // place topping randomly on top and within of the pizza
+			{
+				tempTopping.x = FlxG.random.float(x, x + width - tempTopping.width);
+				tempTopping.y = FlxG.random.float(y, y + height - tempTopping.height);
+			}
+			toppingSprites.add(tempTopping);
 		}
 	}
 }
