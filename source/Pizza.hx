@@ -68,20 +68,20 @@ class Pizza extends FlxExtendedSprite
 		toppingSprites.clear();
 
 		var tempTopping:ToppingSprite;
+		var padding = 10;
 		for (topping in toppings)
 		{
 			tempTopping = new ToppingSprite(topping, cooked);
-
 			// place cooked sauces in the center of the pizza
-			if (cooked&&(topping == ToppingEnum.dark_sauce || topping == ToppingEnum.light_sauce))
+			if (cooked && (topping == ToppingEnum.dark_sauce || topping == ToppingEnum.light_sauce))
 			{
 				tempTopping.x = x + (width - tempTopping.width) / 2;
 				tempTopping.y = y + (height - tempTopping.height) / 2;
 			}
 			else // place topping randomly on top and within of the pizza
 			{
-				tempTopping.x = FlxG.random.float(x, x + width - tempTopping.width);
-				tempTopping.y = FlxG.random.float(y, y + height - tempTopping.height);
+				tempTopping.x = FlxG.random.float(x + padding, x + width - tempTopping.width - padding);
+				tempTopping.y = FlxG.random.float(y + padding, y + height - tempTopping.height - padding);
 			}
 			toppingSprites.add(tempTopping);
 		}
