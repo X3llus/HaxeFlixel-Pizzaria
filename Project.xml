@@ -18,7 +18,7 @@
 	<!--These window settings apply to all targets-->
 	<!-- ? resiable allow sit to be fullscreen -->
 	<!-- background was changed to be hex with opcity/transparency -->
-	<window width="1920" height="1080" fps="60" background="#00000000" hardware="true" vsync="false" resizable="true" borderless="true" />
+	<window width="1920" height="1080" fps="60" background="#00000000" hardware="true" vsync="false" resizable="true" borderless="false" />
 
 	<!--HTML5-specific-->
 	<window if="html5" 	/>
