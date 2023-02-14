@@ -37,8 +37,9 @@ class PlayState extends FlxState
 
 	var balance:Int = 100;
 	var balanceText:FlxText;
-	var orderOne:PizzaOrder;
-	var orderTwo:PizzaOrder;
+	var currentOrder:PizzaOrder;
+
+	var ticket:FlxSprite;
 
 	// Random Number generator
 	public function randomRangeInt(min:Int, max:Int):Int
@@ -93,17 +94,18 @@ class PlayState extends FlxState
 		add(trash);
 
 		// Delete all below this, Just a demo of how it works
-		var pizzaTwo = PizzaOrder.newOrder(2);
+		currentOrder = PizzaOrder.newOrder(getMaxComplexity());
 
-		trace(pizzaTwo.pId);
-		trace(pizzaTwo.pSauce);
-		trace(pizzaTwo.pCheese);
-		trace(pizzaTwo.pTopping);
-		trace(pizzaTwo.ordArray);
+		trace(currentOrder.pId);
+		trace(currentOrder.pSauce);
+		trace(currentOrder.pCheese);
+		trace(currentOrder.pTopping);
+		trace(currentOrder.ordArray);
 
-		var ticket = new FlxSprite(-175, -175);
+		ticket = new FlxSprite(10, 100);
 		ticket.loadGraphic("assets/images/environment/notepad.jpg");
 		ticket.scale.set(0.30, 0.30);
+		ticket.updateHitbox();
 		add(ticket);
 
 		var tHead = new flixel.text.FlxText(39, 100, 0, "Current Order", 12);
@@ -112,23 +114,24 @@ class PlayState extends FlxState
 		var t3 = new flixel.text.FlxText(39, 195, 0, "", 9);
 		var t4 = new flixel.text.FlxText(37, 160, "", 7);
 
-		t.screenCenter();
+		tHead.color = FlxColor.BLACK;
+		t.color = FlxColor.BLACK;
+		t2.color = FlxColor.BLACK;
+		t3.color = FlxColor.BLACK;
+		t4.color = FlxColor.BLACK;
+
+		add(tHead);
+		tHead.visible = true;
 		add(t);
-		t.visible = false;
-
-		t2.screenCenter();
+		t.visible = true;
 		add(t2);
-		t2.visible = false;
-
-		t3.screenCenter();
+		t2.visible = true;
 		add(t3);
-		t3.visible = false;
-
-		t4.screenCenter();
+		t3.visible = true;
 		add(t4);
-		t4.visible = true;
+		t4.visible = false;
 
-		orderTwo.displayOrder(orderTwo, t, t2, t3, t4);
+		currentOrder.displayOrder(currentOrder, t, t2, t3, t4);
 
 		balance -= 25 * difficulty;
 		balanceText = new FlxText(0, 0);
@@ -136,16 +139,6 @@ class PlayState extends FlxState
 		balanceText.size = 64;
 		balanceText.x = FlxG.width - balanceText.width;
 		add(balanceText);
-
-		var btn = new FlxButton(0, 0, "serve", onButtonClick);
-		add(btn);
-	}
-
-	function onButtonClick()
-	{
-		{
-			servePizza(pizza, orderTwo);
-		}
 	}
 
 	override public function update(elapsed:Float)
@@ -187,8 +180,17 @@ class PlayState extends FlxState
 		{
 			FlxG.overlap(oven, pizza, cookPizza);
 			FlxG.overlap(trash, pizza, resetPizza);
+			FlxG.overlap(pizza, ticket, serveHelper);
 		}
 		super.update(elapsed);
+	}
+
+	// needed to convert overlapping with ticket sprite into calling serving order
+	function serveHelper(pizza:Pizza, ticket:FlxSprite)
+	{
+		{
+			servePizza(pizza, currentOrder);
+		}
 	}
 
 	public function getMaxComplexity()
@@ -276,7 +278,7 @@ class PlayState extends FlxState
 
 	function servePizza(pizza:Pizza, order:PizzaOrder)
 	{
-		trace(pizza.toppings);
+		// variable that will track our profit or loss
 		var profit:Int = 0;
 
 		if (pizza.cooked == false)
@@ -284,14 +286,12 @@ class PlayState extends FlxState
 			profit -= 10;
 		}
 
+		// compare created pizza and order
 		for (topp in pizza.toppings)
 		{
 			if (order.ordArray.contains(topp.getName()))
 			{
-				// pizza.toppings.remove(topp);
 				profit += 5;
-
-				trace("order ontains " + topp);
 
 				order.ordArray.remove(topp.getName());
 			}
@@ -301,8 +301,7 @@ class PlayState extends FlxState
 			}
 		}
 
-		trace(order.ordArray);
-
+		// deduct if missing toppings
 		if (order.ordArray.length > 0)
 		{
 			profit -= 5 * order.ordArray.length;
@@ -310,7 +309,6 @@ class PlayState extends FlxState
 
 		balance += profit;
 		balanceText.text = "Your balance: $" + balance;
-		trace(balance);
 
 		resetPizza(trash, pizza);
 
