@@ -105,22 +105,13 @@ class PlayState extends FlxState
 		patienceEvent = new Event<Void->Void>();
 		patienceEvent.add(function () {
 			customers.shift();
-			// Reset the tickets
-			for (i in 0...tickets.length) {
-				var ticket = tickets[i];
-				remove(ticket.ticket);
-				remove(ticket.tHead);
-				remove(ticket.t1);
-				remove(ticket.t2);
-				remove(ticket.t3);
-				remove(ticket.t4);
-			}
-
+			resetTickets();
 			tickets.shift();
 			displayTicket();
 		});
 
 		customers.push(new Customer(difficulty, patienceEvent));
+		resetTickets();
 		displayTicket();
 
 		// time of playthrough counter
@@ -140,6 +131,7 @@ class PlayState extends FlxState
 			if (difIncrease % (15-speed) == 0) {
 				customers.push(new Customer(difficulty, patienceEvent));
 				trace("New customer added: " + customers.length);
+				resetTickets();
 				displayTicket();
 			}
 		}
@@ -176,17 +168,35 @@ class PlayState extends FlxState
 			FlxG.overlap(oven, pizza, cookPizza);
 			FlxG.overlap(trash, pizza, resetPizza);
 			for (i in 0...tickets.length) {
-				var overlap = FlxG.overlap(pizza, tickets[i].ticket);
-				if (overlap) {
-					try {
-						servePizza(pizza, customers[i].order);
-					} catch (e:Dynamic) {
-						continue;
+				try {
+					var overlap = FlxG.overlap(pizza, tickets[i].ticket);
+					if (overlap) {
+							servePizza(pizza, customers[i].order);
+							customers.splice(i, 1);
+							resetTickets();
+							tickets.splice(i, 1);
+							displayTicket();
 					}
+				} catch (e:Dynamic) {
+					continue;
 				}
 			}
 		}
 		super.update(elapsed);
+	}
+
+	function resetTickets()
+	{
+		// Reset the tickets
+		for (i in 0...tickets.length) {
+			var ticket = tickets[i];
+			remove(ticket.ticket);
+			remove(ticket.tHead);
+			remove(ticket.t1);
+			remove(ticket.t2);
+			remove(ticket.t3);
+			remove(ticket.t4);
+		}
 	}
 
 	function displayTicket()
