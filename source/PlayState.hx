@@ -13,7 +13,9 @@ import flixel.group.FlxSpriteGroup;
 import flixel.input.mouse.FlxMouseEventManager;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import haxe.Timer;
 
 class PlayState extends FlxState
 {
@@ -22,6 +24,9 @@ class PlayState extends FlxState
 	var pizza:Pizza;
 	var oven:Oven;
 	var trash:FlxSprite;
+
+	var difIncrease:Int;
+	var counter:Timer;
 
 	public var draggedTopping:Topping;
 
@@ -49,6 +54,7 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		super.create();
 		FlxG.debugger.visible = true;
 		// play bg music and loop
 		new AssetsUtil().playBGMusic(.32);
@@ -86,28 +92,19 @@ class PlayState extends FlxState
 		trash = new FlxSprite(0, 500, "assets/images/environment/trash.png");
 		add(trash);
 
-		super.create();
-
 		// Delete all below this, Just a demo of how it works
+		var pizzaTwo = PizzaOrder.newOrder(2);
 
-		orderOne = newOrder(getMaxComplexity());
-		trace("order 1: ");
-		trace(orderOne.pSauce);
-		trace(orderOne.pCheese);
-		trace(orderOne.pTopping);
-		trace(orderOne.ordArray);
+		trace(pizzaTwo.pId);
+		trace(pizzaTwo.pSauce);
+		trace(pizzaTwo.pCheese);
+		trace(pizzaTwo.pTopping);
+		trace(pizzaTwo.ordArray);
 
-		orderTwo = newOrder(getMaxComplexity());
-		trace("order 2: ");
-		trace(orderTwo.pSauce);
-		trace(orderTwo.pCheese);
-		trace(orderTwo.pTopping);
-		trace(orderTwo.ordArray);
-
-		var t = new flixel.text.FlxText(0, 0, 0, "", 64);
-		var t2 = new flixel.text.FlxText(0, 0, 0, "", 64);
-		var t3 = new flixel.text.FlxText(0, 0, 0, "", 12);
-		var t4 = new flixel.text.FlxText(0, 0, 0, "", 12);
+		var ticket = new FlxSprite(-175, -175);
+		ticket.loadGraphic("assets/images/environment/notepad.jpg");
+		ticket.scale.set(0.30, 0.30);
+		add(ticket);
 
 		t.screenCenter();
 		add(t);
@@ -201,71 +198,6 @@ class PlayState extends FlxState
 			default:
 				return 3;
 		}
-	}
-
-	public function newOrder(complexity:Int):PizzaOrder
-	{
-		pId += 1;
-		// Init all flags
-		var pSauce = "";
-
-		var pCheese = "";
-		var pTopping:Array<String> = [];
-		var ordArray:Array<String> = [];
-
-		while (complexity > 0)
-		{ // create pizza loop
-			// if complexity is higher then offering, set to max offerings
-			if (complexity > 4)
-				complexity = 4;
-
-			var x = randomRangeInt(1, 6); // Decides on random topping
-
-			if (x == 1 && pSauce == "")
-			{ // random sauce
-				complexity -= 1;
-				pSauce = "light_sauce";
-			}
-			if (x == 2 && pCheese == "")
-			{ // Pick Special Cheese
-				complexity -= 1;
-				pCheese = "yellow_cheese";
-			}
-
-			if (x > 3)
-			{ // random Topping
-				x = randomRangeInt(1, 2);
-				if (x == 1 && pTopping.contains("mushroom") == false)
-				{
-					pTopping.push("mushroom");
-					complexity -= 1;
-				}
-				if (x == 2 && pTopping.contains("pepperoni") == false)
-				{
-					pTopping.push("pepperoni");
-					complexity -= 1;
-				}
-			}
-		}
-		// if no value set, set a defult
-		if (pSauce == "")
-			pSauce = "dark_sauce";
-
-		if (pCheese == "")
-			pCheese = "white_cheese";
-
-		// pizzaorder made and returned
-		var order = new PizzaOrder(pId, pSauce, pCheese, pTopping, ordArray);
-
-		ordArray.push(pSauce);
-		ordArray.push(pCheese);
-
-		for (top in pTopping)
-		{ // each topping
-			ordArray.push(top);
-		}
-
-		return order;
 	}
 
 	/**
