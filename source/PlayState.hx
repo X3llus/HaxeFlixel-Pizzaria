@@ -31,6 +31,8 @@ class PlayState extends FlxState
 
 	var score:Int = 0;
 	var scoreText:FlxText;
+	var orderOne:PizzaOrder;
+	var orderTwo:PizzaOrder;
 
 	// Random Number generator
 	public function randomRangeInt(min:Int, max:Int):Int
@@ -87,19 +89,19 @@ class PlayState extends FlxState
 
 		// Delete all below this, Just a demo of how it works
 
-		var pizzaOne = newOrder(5);
+		orderOne = newOrder(getMaxComplexity());
 		trace("order 1: ");
-		trace(pizzaOne.pSauce);
-		trace(pizzaOne.pCheese);
-		trace(pizzaOne.pTopping);
-		trace(pizzaOne.ordArray);
+		trace(orderOne.pSauce);
+		trace(orderOne.pCheese);
+		trace(orderOne.pTopping);
+		trace(orderOne.ordArray);
 
-		var pizzaTwo = newOrder(2);
+		orderTwo = newOrder(getMaxComplexity());
 		trace("order 2: ");
-		trace(pizzaTwo.pSauce);
-		trace(pizzaTwo.pCheese);
-		trace(pizzaTwo.pTopping);
-		trace(pizzaTwo.ordArray);
+		trace(orderTwo.pSauce);
+		trace(orderTwo.pCheese);
+		trace(orderTwo.pTopping);
+		trace(orderTwo.ordArray);
 
 		var t = new flixel.text.FlxText(0, 0, 0, "", 64);
 		var t2 = new flixel.text.FlxText(0, 0, 0, "", 64);
@@ -122,7 +124,7 @@ class PlayState extends FlxState
 		add(t4);
 		t4.visible = true;
 
-		pizzaTwo.displayOrder(pizzaTwo, t, t2, t3, t4);
+		orderTwo.displayOrder(orderTwo, t, t2, t3, t4);
 
 		scoreText = new FlxText(0, 0);
 		scoreText.text = "You earned: $" + score;
@@ -241,7 +243,7 @@ class PlayState extends FlxState
 			pCheese = "White_Cheese";
 
 		// pizzaorder made and returned
-		var pizza = new PizzaOrder(pId, pSauce, pCheese, pTopping, ordArray);
+		var order = new PizzaOrder(pId, pSauce, pCheese, pTopping, ordArray);
 
 		ordArray.push(pSauce);
 		ordArray.push(pCheese);
@@ -251,7 +253,7 @@ class PlayState extends FlxState
 			ordArray.push(top);
 		}
 
-		return pizza;
+		return order;
 	}
 
 	/**
