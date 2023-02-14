@@ -16,10 +16,10 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import haxe.Timer;
+import lime.app.Event;
 
 class PlayState extends FlxState
 {
-
 	var toppings:FlxTypedGroup<Topping>;
 	var sauces:FlxTypedGroup<Sauce>;
 	var pizza:Pizza;
@@ -32,6 +32,9 @@ class PlayState extends FlxState
 	public var draggedTopping:Topping;
 
 	public var pizzaToppings:FlxTypedGroup<FlxSprite>;
+
+	var patienceEvent:Event<Void->Void>;
+	var customers:Array<Customer>;
   
 	var pId = 0;
 	var difficulty:Int;
@@ -62,11 +65,13 @@ class PlayState extends FlxState
 		createTopping(light_sauce, 500, 600);
 		add(toppings);
 
-		// Create a group of sauces
-		// sauces = new FlxTypedGroup<Sauce>();
-		// createSauce(dark_sauce, 400, 600);
-		// createSauce(light_sauce, 500, 600);
-		// add(sauces);
+		customers = [];
+		patienceEvent = new Event<Void->Void>();
+		patienceEvent.add(function () {
+			customers.shift();
+			// Replace order with next customers order and add to the failure count
+		});
+		// TODO: create timer to start adding customers
 
 		pizzaToppings = new FlxTypedGroup<FlxSprite>();
 		// Create a pizza
@@ -126,6 +131,7 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 	
+		// TODO: check if current order is null, if so, get next customers order.
 
 		/**
 			Have to iterate through all the toppings to check if there is a
