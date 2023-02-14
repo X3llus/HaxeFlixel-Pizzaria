@@ -92,8 +92,8 @@ class PizzaOrder{
 	public function displayOrder(pizzaOrder:PizzaOrder, textSauce:flixel.text.FlxText, textCheese:flixel.text.FlxText, textTopping:flixel.text.FlxText, textOrd:flixel.text.FlxText){
 		//set the text values of text boxes too pizzaOrder ifno
 
-		pizzaOrder.pSauce = pSauce.replace("", " ");
-		pizzaOrder.pCheese = pCheese.replace("", " ");
+		pizzaOrder.pSauce = pSauce.replace("_", " ");
+		pizzaOrder.pCheese = pCheese.replace("_", " ");
 
 		textSauce.text = pizzaOrder.pSauce;
 		textCheese.text = pizzaOrder.pCheese;
