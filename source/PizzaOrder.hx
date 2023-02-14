@@ -1,3 +1,5 @@
+package;
+
 class PizzaOrder{
 	public  var pId:Int;
 	public	var pSauce:String;
