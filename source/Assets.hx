@@ -43,7 +43,6 @@ class ToppingSprite extends FlxExtendedSprite
 	public function new(topping:ToppingEnum, cooked:Bool = false)
 	{
 		super();
-		enableMouseClicks(false);
 		value = topping;
 		switch topping
 		{
