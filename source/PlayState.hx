@@ -12,6 +12,7 @@ import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.mouse.FlxMouseEventManager;
 import flixel.text.FlxText;
+import flixel.ui.FlxButton;
 import flixel.util.FlxTimer;
 
 class PlayState extends FlxState
@@ -29,8 +30,8 @@ class PlayState extends FlxState
 	var pId = 0;
 	private var difficulty = 0;
 
-	var score:Int = 0;
-	var scoreText:FlxText;
+	var balance:Int = 100;
+	var balanceText:FlxText;
 	var orderOne:PizzaOrder;
 	var orderTwo:PizzaOrder;
 
@@ -126,11 +127,22 @@ class PlayState extends FlxState
 
 		orderTwo.displayOrder(orderTwo, t, t2, t3, t4);
 
-		scoreText = new FlxText(0, 0);
-		scoreText.text = "You earned: $" + score;
-		scoreText.size = 64;
-		scoreText.x = FlxG.width - scoreText.width;
-		add(scoreText);
+		balance -= 25 * difficulty;
+		balanceText = new FlxText(0, 0);
+		balanceText.text = "Your balance: $" + balance;
+		balanceText.size = 64;
+		balanceText.x = FlxG.width - balanceText.width;
+		add(balanceText);
+
+		var btn = new FlxButton(0, 0, "serve", onButtonClick);
+		add(btn);
+	}
+
+	function onButtonClick()
+	{
+		{
+			servePizza(pizza, orderTwo);
+		}
 	}
 
 	override public function update(elapsed:Float)
@@ -217,7 +229,7 @@ class PlayState extends FlxState
 			if (x == 2 && pCheese == "")
 			{ // Pick Special Cheese
 				complexity -= 1;
-				pCheese = "yellow_Cheese";
+				pCheese = "yellow_cheese";
 			}
 
 			if (x > 3)
@@ -240,7 +252,7 @@ class PlayState extends FlxState
 			pSauce = "dark_sauce";
 
 		if (pCheese == "")
-			pCheese = "White_Cheese";
+			pCheese = "white_cheese";
 
 		// pizzaorder made and returned
 		var order = new PizzaOrder(pId, pSauce, pCheese, pTopping, ordArray);
@@ -322,5 +334,46 @@ class PlayState extends FlxState
 		for (i in 0...pizza.toppings.length)
 			pizza.toppings.shift();
 		pizza.updateGraphic();
+	}
+
+	function servePizza(pizza:Pizza, order:PizzaOrder)
+	{
+		trace(pizza.toppings);
+		var profit:Int = 0;
+
+		if (pizza.cooked == false)
+		{
+			profit -= 10;
+		}
+
+		for (topp in pizza.toppings)
+		{
+			if (order.ordArray.contains(topp.getName()))
+			{
+				// pizza.toppings.remove(topp);
+				profit += 5;
+
+				trace("order ontains " + topp);
+
+				order.ordArray.remove(topp.getName());
+			}
+			else
+			{
+				profit -= 5;
+			}
+		}
+
+		trace(order.ordArray);
+
+		if (order.ordArray.length > 0)
+		{
+			profit -= 5 * order.ordArray.length;
+		}
+
+		balance += profit;
+		balanceText.text = "Your balance: $" + balance;
+		trace(balance);
+
+		resetPizza(trash, pizza);
 	}
 }
