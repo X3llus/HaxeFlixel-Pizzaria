@@ -27,8 +27,8 @@ class Pizza extends FlxExtendedSprite
 	{
 		super();
 		loadGraphic(AssetPaths.round_dough__png);
-		x = 200;
-		y = 200;
+		x = 250;
+		y = 250;
 		this.cooked = false;
 		this.toppings = new Array<ToppingEnum>();
 		enableMouseDrag();
