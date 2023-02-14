@@ -375,5 +375,19 @@ class PlayState extends FlxState
 		trace(balance);
 
 		resetPizza(trash, pizza);
+
+		if (balance < 0)
+		{
+			endGame();
+		}
+	}
+
+	function endGame()
+	{
+		trace("Endgame activated");
+		var finalText = new FlxText(0, 0, FlxG.width * 0.8, "You are out of money! You served " + pId + " orders");
+		finalText.autoSize = true;
+		finalText.screenCenter();
+		add(finalText);
 	}
 }
