@@ -1,6 +1,7 @@
 package;
 
 import Assets.AssetsUtil;
+import Assets.ToppingSprite;
 import PizzaOrder;
 import Topping.ToppingEnum;
 import flixel.FlxG;
@@ -29,7 +30,7 @@ class PlayState extends FlxState
 
 	public var draggedTopping:Topping;
 
-	public var pizzaToppings:FlxTypedGroup<FlxSprite>;
+	public var pizzaToppings:FlxTypedGroup<ToppingSprite>;
 
 	var pId = 0;
 	private var difficulty = 0;
@@ -57,7 +58,7 @@ class PlayState extends FlxState
 		super.create();
 		FlxG.debugger.visible = true;
 		// play bg music and loop
-		new AssetsUtil().playBGMusic(.32);
+		new AssetsUtil().playBGMusic(.01);
 
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
@@ -72,18 +73,10 @@ class PlayState extends FlxState
 		createTopping(light_sauce, 500, 600);
 		add(toppings);
 
-		// Create a group of sauces
-		// sauces = new FlxTypedGroup<Sauce>();
-		// createSauce(dark_sauce, 400, 600);
-		// createSauce(light_sauce, 500, 600);
-		// add(sauces);
-
-		pizzaToppings = new FlxTypedGroup<FlxSprite>();
+		pizzaToppings = new FlxTypedGroup<ToppingSprite>();
 		// Create a pizza
 		pizza = new Pizza(pizzaToppings);
 		add(pizza);
-		// place ingrdient spirte over the pizza
-		add(pizzaToppings);
 
 		// Create an oven
 		oven = new Oven(200, 500);
@@ -247,11 +240,7 @@ class PlayState extends FlxState
 	function resetPizza(trash:FlxSprite, pizza:Pizza)
 	{
 		// move pizza back to the initial position
-		pizza.x = pizza.y = 200;
-		pizza.cooked = false;
-		for (i in 0...pizza.toppings.length)
-			pizza.toppings.shift();
-		pizza.updateGraphic();
+		pizza.resetPizza();
 	}
 
 	function servePizza(pizza:Pizza, order:PizzaOrder)
@@ -288,7 +277,7 @@ class PlayState extends FlxState
 		balance += profit;
 		balanceText.text = "Your balance: $" + balance;
 
-		resetPizza(trash, pizza);
+		pizza.resetPizza();
 
 		if (balance < 0)
 		{
