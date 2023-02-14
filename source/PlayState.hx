@@ -250,6 +250,7 @@ class PlayState extends FlxState
 
 		if (pizza.cooked == false)
 		{
+			trace('Uncooked');
 			profit -= 10;
 		}
 
