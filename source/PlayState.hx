@@ -258,12 +258,14 @@ class PlayState extends FlxState
 		{
 			if (order.ordArray.contains(topp.getName()))
 			{
+				trace('correct: ' + topp.getName());
 				profit += 5;
 
 				order.ordArray.remove(topp.getName());
 			}
 			else
 			{
+				trace('incorrect: ' + topp.getName());
 				profit -= 5;
 			}
 		}
@@ -271,6 +273,7 @@ class PlayState extends FlxState
 		// deduct if missing toppings
 		if (order.ordArray.length > 0)
 		{
+			trace('missing: ' + order.ordArray.length);
 			profit -= 5 * order.ordArray.length;
 		}
 
