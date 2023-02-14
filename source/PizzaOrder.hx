@@ -25,14 +25,14 @@ class PizzaOrder{
 		}
 
 		pIdCounter +=1;
+
 		//Init all flags
 		var pSauce = "";
-		
 		var pCheese = "";
 		var pTopping:Array<String> = [];
 		var ordArray:Array<String> = [];
 
-		while (complexity > 0){//create pizza loop
+		while (complexity > 0) {//create pizza loop
 			//if complexity is higher then offering, set to max offerings
 			if (complexity > 4)
 				complexity = 4;
@@ -40,25 +40,25 @@ class PizzaOrder{
 			//Decides on random topping
 			var x = randomRangeInt(1, 6);
 			
-			if (x == 1 && pSauce == ""){
+			if (x == 1 && pSauce == "") {
 				//random sauce
 				complexity -=1;
 				pSauce = "light_sauce";
 			}
-			if(x == 2 && pCheese =="" ){
+			if (x == 2 && pCheese == "") {
 				//Pick Special Cheese
 				complexity -=1;
 				pCheese = "yellow_Cheese";
 			}
 			
-
-			if(x>3){//random Topping
+			//random Topping
+			if (x>3) {
 				x = randomRangeInt(1, 2);
-				if(x == 1 && pTopping.contains("mushroom") == false){
+				if (x == 1 && pTopping.contains("mushroom") == false) {
 					pTopping.push("mushroom");
 					complexity -=1;
 				}
-				if(x == 2 && pTopping.contains("pepperoni")== false){
+				if (x == 2 && pTopping.contains("pepperoni")== false) {
 					pTopping.push("pepperoni");
 					complexity -=1;
 				}
@@ -79,12 +79,12 @@ class PizzaOrder{
 		ordArray.push(pSauce);
 		ordArray.push(pCheese);
 
-		for (top in pTopping){//each topping
-				ordArray.push(top);
-			}
+		//each topping
+		for (top in pTopping)
+		{
+			ordArray.push(top);
+		}
 	
-
-
 		return pizza;
 	}
 
@@ -101,7 +101,6 @@ class PizzaOrder{
 		var sTopping = "";
 		for (top in pizzaOrder.pTopping){
 			sTopping = sTopping + " " + top;
-
 		}
 		textTopping.text = sTopping; 
 

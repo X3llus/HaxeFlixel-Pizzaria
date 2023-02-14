@@ -16,6 +16,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import haxe.Timer;
+import lime.app.Event;
 
 class PlayState extends FlxState
 {
@@ -25,21 +26,23 @@ class PlayState extends FlxState
 	var oven:Oven;
 	var trash:FlxSprite;
 
-	var difIncrease:Int;
-	var counter:Timer;
-
 	public var draggedTopping:Topping;
-
 	public var pizzaToppings:FlxTypedGroup<FlxSprite>;
 
+	var difIncrease:Int = 0;
+	var speed:Int = 0;
+	var counter:Timer;
+	var patienceEvent:Event<Void->Void>;
+	var customers:Array<Customer>;
+  
 	var pId = 0;
 	private var difficulty = 0;
 
 	var balance:Int = 100;
 	var balanceText:FlxText;
-	var currentOrder:PizzaOrder;
 
-	var ticket:FlxSprite;
+	var tickets:Array<Ticket> = new Array<Ticket>();
+	// var ticket:FlxSprite;
 
 	// Random Number generator
 	public function randomRangeInt(min:Int, max:Int):Int
@@ -73,12 +76,6 @@ class PlayState extends FlxState
 		createTopping(light_sauce, 500, 600);
 		add(toppings);
 
-		// Create a group of sauces
-		// sauces = new FlxTypedGroup<Sauce>();
-		// createSauce(dark_sauce, 400, 600);
-		// createSauce(light_sauce, 500, 600);
-		// add(sauces);
-
 		pizzaToppings = new FlxTypedGroup<FlxSprite>();
 		// Create a pizza
 		pizza = new Pizza(pizzaToppings);
@@ -93,56 +90,66 @@ class PlayState extends FlxState
 		trash = new FlxSprite(0, 500, "assets/images/environment/trash.png");
 		add(trash);
 
-		// Delete all below this, Just a demo of how it works
-		currentOrder = PizzaOrder.newOrder(getMaxComplexity());
+		// display first ticket
 
-		trace(currentOrder.pId);
-		trace(currentOrder.pSauce);
-		trace(currentOrder.pCheese);
-		trace(currentOrder.pTopping);
-		trace(currentOrder.ordArray);
-
-		ticket = new FlxSprite(10, 100);
-		ticket.loadGraphic("assets/images/environment/notepad.jpg");
-		ticket.scale.set(0.30, 0.30);
-		ticket.updateHitbox();
-		add(ticket);
-
-		var tHead = new flixel.text.FlxText(39, 100, 0, "Current Order", 12);
-		var t = new flixel.text.FlxText(39, 135, 0, "", 12);
-		var t2 = new flixel.text.FlxText(39, 165, 0, "", 12);
-		var t3 = new flixel.text.FlxText(39, 195, 0, "", 9);
-		var t4 = new flixel.text.FlxText(37, 160, "", 7);
-
-		tHead.color = FlxColor.BLACK;
-		t.color = FlxColor.BLACK;
-		t2.color = FlxColor.BLACK;
-		t3.color = FlxColor.BLACK;
-		t4.color = FlxColor.BLACK;
-
-		add(tHead);
-		tHead.visible = true;
-		add(t);
-		t.visible = true;
-		add(t2);
-		t2.visible = true;
-		add(t3);
-		t3.visible = true;
-		add(t4);
-		t4.visible = false;
-
-		currentOrder.displayOrder(currentOrder, t, t2, t3, t4);
-
+		// Show balance (score)
 		balance -= 25 * difficulty;
 		balanceText = new FlxText(0, 0);
 		balanceText.text = "Your balance: $" + balance;
 		balanceText.size = 64;
 		balanceText.x = FlxG.width - balanceText.width;
 		add(balanceText);
+
+		// Customer setup
+		customers = [];
+		patienceEvent = new Event<Void->Void>();
+		patienceEvent.add(function () {
+			customers.shift();
+			// Reset the tickets
+			for (i in 0...tickets.length) {
+				var ticket = tickets[i];
+				remove(ticket.ticket);
+				remove(ticket.tHead);
+				remove(ticket.t1);
+				remove(ticket.t2);
+				remove(ticket.t3);
+				remove(ticket.t4);
+			}
+
+			tickets.shift();
+			displayTicket();
+		});
+
+		customers.push(new Customer(difficulty, patienceEvent));
+		displayTicket();
+
+		// time of playthrough counter
+		counter = new haxe.Timer(1000);
+		counter.run = function() {
+			difIncrease++;
+			if (difficulty < 2 && difIncrease % 30 == 0) {
+				difficulty++;
+				trace("Difficulty increased: " + difficulty);
+			}
+			// Ramping speed
+			if (difIncrease % 20 == 0 && speed < 10) {
+				speed++;
+				trace("Speed increased: " + speed);
+			}
+			// Add new customer
+			if (difIncrease % (15-speed) == 0) {
+				customers.push(new Customer(difficulty, patienceEvent));
+				trace("New customer added: " + customers.length);
+				displayTicket();
+			}
+		}
 	}
 
 	override public function update(elapsed:Float)
 	{
+	
+		// TODO: check if current order is null, if so, get next customers order.
+
 		/**
 			Have to iterate through all the toppings to check if there is a
 			topping being dragged so that we can check for overlapping.
@@ -163,37 +170,47 @@ class PlayState extends FlxState
 			FlxG.overlap(draggedTopping, pizza, addTopping, checkTopping) ? null : draggedTopping.kill();
 		}
 
-		/**
-			Iterate through all sauces to determine if a sauce must be added
-		**/
-		// sauces.forEach((sauce) ->
-		// {
-		// 	if (sauce.addSauce)
-		// 	{
-		// 		pizza.addTopping(sauce.value);
-		// 		sauce.addSauce = false;
-		// 	}
-		// });
-
 		// Only check for overlapping if the pizza is not being dragged
 		if (pizza.isDragged == false)
 		{
 			FlxG.overlap(oven, pizza, cookPizza);
 			FlxG.overlap(trash, pizza, resetPizza);
-			FlxG.overlap(pizza, ticket, serveHelper);
+			for (i in 0...tickets.length) {
+				var overlap = FlxG.overlap(pizza, tickets[i].ticket);
+				if (overlap) {
+					try {
+						servePizza(pizza, customers[i].order);
+					} catch (e:Dynamic) {
+						continue;
+					}
+				}
+			}
 		}
 		super.update(elapsed);
 	}
 
-	// needed to convert overlapping with ticket sprite into calling serving order
-	function serveHelper(pizza:Pizza, ticket:FlxSprite)
+	function displayTicket()
 	{
+		var xStart = 0;
+		for (i in 0...customers.length)
 		{
-			servePizza(pizza, currentOrder);
+			var ticket = new Ticket(xStart);
+			tickets.push(ticket);
+
+			add(ticket.ticket);
+			add(ticket.tHead);
+			add(ticket.t1);
+			add(ticket.t2);
+			add(ticket.t3);
+			add(ticket.t4);
+
+			customers[i].order.displayOrder(customers[i].order, ticket.t1, ticket.t2, ticket.t3, ticket.t4);
+
+			xStart += Std.int(ticket.ticket.width) + 10;
 		}
 	}
 
-	public function getMaxComplexity()
+	public static function getMaxComplexity(difficulty:Int)
 	{
 		switch (difficulty)
 		{
@@ -269,7 +286,8 @@ class PlayState extends FlxState
 	function resetPizza(trash:FlxSprite, pizza:Pizza)
 	{
 		// move pizza back to the initial position
-		pizza.x = pizza.y = 200;
+		pizza.x = FlxG.width / 2 - pizza.width / 2;
+		pizza.y = FlxG.height / 2 - pizza.height / 2;
 		pizza.cooked = false;
 		for (i in 0...pizza.toppings.length)
 			pizza.toppings.shift();
