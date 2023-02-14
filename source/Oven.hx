@@ -29,6 +29,8 @@ class Oven extends FlxSprite
 		this.loadGraphic("assets/images/environment/oven-closed.png");
 		// Cook the pizza after x seconds
 		var timer = new FlxTimer();
+		//remove toppings (invisble) while the pizza is in the oven
+		pizza.toppingSprites.clear();
 		timer.start(5.0, updatePizza, 1);
 	}
 
