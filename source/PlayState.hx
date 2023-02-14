@@ -106,6 +106,12 @@ class PlayState extends FlxState
 		ticket.scale.set(0.30, 0.30);
 		add(ticket);
 
+		var tHead = new flixel.text.FlxText(39, 100, 0, "Current Order", 12);
+		var t = new flixel.text.FlxText(39, 135, 0, "", 12);
+		var t2 = new flixel.text.FlxText(39, 165, 0, "", 12);
+		var t3 = new flixel.text.FlxText(39, 195, 0, "", 9);
+		var t4 = new flixel.text.FlxText(37, 160, "", 7);
+
 		t.screenCenter();
 		add(t);
 		t.visible = false;
