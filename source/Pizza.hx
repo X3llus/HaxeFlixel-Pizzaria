@@ -31,7 +31,6 @@ class Pizza extends FlxExtendedSprite
 		this.y = FlxG.height / 2 - height / 2;
 		this.cooked = false;
 		this.toppings = new Array<ToppingEnum>();
-		enableMouseClicks(false);
 		enableMouseDrag();
 		toppingSprites = toppingGroup;
 	}

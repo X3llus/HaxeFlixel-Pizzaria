@@ -40,6 +40,7 @@ class Topping extends FlxExtendedSprite
 	override public function mousePressedHandler():Void
 	{
 		isPressed = true;
+		trace(isPressed);
 
 		if (clickable == true && _clickOnRelease == false)
 		{
@@ -74,13 +75,12 @@ class Topping extends FlxExtendedSprite
 	override public function mouseReleasedHandler():Void
 	{
 		isPressed = false;
-
+		trace(isPressed);
 		// Stop dragging the draggable topping
 		if (draggableTopping.isDragged == true)
 		{
 			draggableTopping.stopDrag();
 		}
-
 		if (mouseReleasedCallback != null)
 		{
 			mouseReleasedCallback(this, mouseX, mouseY);

@@ -17,7 +17,7 @@ class MenuState extends FlxState
 	private var complexity:FlxText;
 	private var background:FlxSprite;
 	private var increaseDifficulty:FlxButtonPlus;
-	private var play:FlxButtonPlus;
+	private var play:FlxButton;
 	private var totalPoints = 0;
 	private var currentDifficulty = 0;
 
@@ -93,10 +93,10 @@ class MenuState extends FlxState
 		add(complexity);
 
 		// Centered Play button to start/restart the game
-		play = new FlxButtonPlus(0, 0, clickPlay, "Play", null, 40);
+		play = new FlxButton(0, 0, "Play", clickPlay);
 		play.screenCenter(X);
-		play.textNormal.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
-		play.textHighlight.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
+		// play.textNormal.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
+		// play.textHighlight.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
 		play.y = difficulty.y + 70;
 		add(play);
 

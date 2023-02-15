@@ -7,15 +7,9 @@ import Topping.ToppingEnum;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxExtendedSprite;
 import flixel.addons.plugin.FlxMouseControl;
 import flixel.group.FlxGroup;
-import flixel.group.FlxSpriteGroup;
-import flixel.input.mouse.FlxMouseEventManager;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 import haxe.Timer;
 import lime.app.Event;
 
