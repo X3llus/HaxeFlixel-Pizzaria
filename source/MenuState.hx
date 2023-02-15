@@ -13,7 +13,7 @@ class MenuState extends FlxState
 	private var title:FlxText;
 	private var rules:FlxText;
 	private var score:FlxText;
-	private var difficulty:FlxText;
+	private var difficulty:FlxButtonPlus;
 	private var complexity:FlxText;
 	private var background:FlxSprite;
 	private var increaseDifficulty:FlxButtonPlus;
@@ -70,28 +70,34 @@ class MenuState extends FlxState
 		add(rules);
 
 		// Initial Difficulty
-		difficulty = new FlxText(50, 0, 130, "Easy", 20);
-		difficulty.alignment = CENTER;
-		difficulty.screenCenter(X);
-		difficulty.y = rules.height + 200;
-		add(difficulty);
+		// difficulty = new FlxText(50, 0, 130, "Easy", 20);
+		// difficulty.alignment = CENTER;
+		// difficulty.screenCenter(X);
+		// difficulty.y = rules.height + 200;
+		// add(difficulty);
 
 		// Increase Difficulty button
-		increaseDifficulty = new FlxButtonPlus(0, 0, clickHarder, "^");
-		increaseDifficulty.x = (difficulty.x + 130);
-		increaseDifficulty.y = (difficulty.y + 5);
-		add(increaseDifficulty);
+		difficulty = new FlxButtonPlus(0, 0, clickHarder, ">  Easy  <", 160, 30);
+		difficulty.screenCenter(X);
+		difficulty.y = rules.height + 200;
+		difficulty.textNormal.setFormat(null, 20, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
+		difficulty.textHighlight.setFormat(null, 20, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
+		difficulty.textHighlight.text = "> > > > >";
+		difficulty.updateActiveButtonColors([0x7d7c7c, 0xb0b0b0]);
+		add(difficulty);
 
-		complexity = new FlxText(50, 0, 0, "Maximum toppings per pizza: 3", 10);
+		complexity = new FlxText(50, 0, 0, "Maximum toppings per pizza: 3", 16);
 		complexity.alignment = CENTER;
 		complexity.screenCenter(X);
-		complexity.y = difficulty.y + 30;
+		complexity.y = difficulty.y + 40;
 		add(complexity);
 
 		// Centered Play button to start/restart the game
-		play = new FlxButtonPlus(0, 0, clickPlay, "Play");
-		play.x = (FlxG.width / 2) - (play.width / 2);
-		play.y = rules.height + 250;
+		play = new FlxButtonPlus(0, 0, clickPlay, "Play", null, 40);
+		play.screenCenter(X);
+		play.textNormal.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
+		play.textHighlight.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
+		play.y = difficulty.y + 70;
 		add(play);
 
 		super.create();
@@ -103,19 +109,23 @@ class MenuState extends FlxState
 		{
 			case 0:
 				currentDifficulty++;
-				difficulty.text = "Normal";
+				difficulty.text = ">  Normal  <";
+				difficulty.updateInactiveButtonColors([0xffe9f02d, 0xffecf254]);
 				complexity.text = "Maximum toppings per pizza: 4";
 			case 1:
 				currentDifficulty++;
-				difficulty.text = "Hard";
+				difficulty.text = ">  Hard  <";
+				difficulty.updateInactiveButtonColors([0xff9f0f0f, 0xffd43030]);
 				complexity.text = "Maximum toppings per pizza: 5";
 			case 2:
 				currentDifficulty = 0;
-				difficulty.text = "Easy";
+				difficulty.text = ">  Easy  <";
+				difficulty.updateInactiveButtonColors([0xff0d910d, 0xff00ff00]);
 				complexity.text = "Maximum toppings per pizza: 3";
 			default:
 				currentDifficulty = 0;
-				difficulty.text = "Easy";
+				difficulty.text = ">  Easy  <";
+				difficulty.updateInactiveButtonColors([0xff0d910d, 0xff00ff00]);
 				complexity.text = "Maximum toppings per pizza: 3";
 		}
 	}
