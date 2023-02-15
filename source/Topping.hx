@@ -29,7 +29,7 @@ class Topping extends FlxExtendedSprite
 		this.x = x;
 		this.y = FlxG.height - 350;
 		this.loadGraphic("assets/images/ingredients/" + value + ".png");
-		this.scale.set(3, 3);
+		this.scale.set(2, 2);
 		this.updateHitbox();
 		this.draggableTopping = null;
 		this.enableMouseClicks(false);

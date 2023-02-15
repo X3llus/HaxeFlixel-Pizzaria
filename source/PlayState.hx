@@ -76,14 +76,14 @@ class PlayState extends FlxState
 		// Create a group of toppings
 		toppings = new FlxTypedGroup<Topping>();
 		createTopping(mushroom, 0);
-		createTopping(pepperoni, 300);
-		createTopping(yellow_cheese, 600);
-		createTopping(white_cheese, 900);
-		createTopping(dark_sauce, 1200);
-		createTopping(light_sauce, 1500);
+		createTopping(pepperoni, 200);
+		createTopping(yellow_cheese, 400);
+		createTopping(white_cheese, 600);
+		createTopping(dark_sauce, 800);
+		createTopping(light_sauce, 1000);
 		add(toppings);
-
 		pizzaToppings = new FlxTypedGroup<ToppingSprite>();
+
 		// Create a pizza
 		pizza = new Pizza(pizzaToppings);
 		add(pizza);
@@ -91,10 +91,14 @@ class PlayState extends FlxState
 		// Create an oven
 		oven = new Oven(FlxG.width - 200, FlxG.height / 2);
 		add(oven);
+
 		// create trash sprite
-		trash = new FlxExtendedSprite(0, 500, "assets/images/environment/trash.png");
+		trash = new FlxExtendedSprite(FlxG.width - 200, FlxG.height - 200, "assets/images/environment/trash.png");
+		trash.scale.set(4, 4);
+		trash.updateHitbox();
 		trash.enableMouseClicks(true);
-		trash.mousePressedCallback = (sprite, _, _) -> {
+		trash.mousePressedCallback = (sprite, _, _) ->
+		{
 			resetPizza(sprite, pizza);
 		}
 		add(trash);
