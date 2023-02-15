@@ -74,12 +74,12 @@ class PlayState extends FlxState
 
 		// Create a group of toppings
 		toppings = new FlxTypedGroup<Topping>();
-		createTopping(pepperoni, 0, 600);
-		createTopping(mushroom, 100, 600);
-		createTopping(yellow_cheese, 200, 600);
-		createTopping(white_cheese, 300, 600);
-		createTopping(dark_sauce, 400, 600);
-		createTopping(light_sauce, 500, 600);
+		createTopping(mushroom, 0);
+		createTopping(pepperoni, 300);
+		createTopping(yellow_cheese, 600);
+		createTopping(white_cheese, 900);
+		createTopping(dark_sauce, 1200);
+		createTopping(light_sauce, 1500);
 		add(toppings);
 
 		pizzaToppings = new FlxTypedGroup<ToppingSprite>();
@@ -272,9 +272,9 @@ class PlayState extends FlxState
 	/**
 		Creates a new topping with the given ToppingEnum and x,y coordinates
 	**/
-	function createTopping(topping:ToppingEnum, x:Float, y:Float)
+	function createTopping(topping:ToppingEnum, x:Float)
 	{
-		toppings.add(new Topping(topping, x, y));
+		toppings.add(new Topping(topping, x));
 	}
 
 	/**

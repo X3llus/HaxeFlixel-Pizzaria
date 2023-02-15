@@ -22,13 +22,15 @@ class Topping extends FlxExtendedSprite
 		@param x Int - the x coordinate of the topping
 		@param y Int - the y coordinate of the topping
 	 */
-	public function new(value:ToppingEnum, x:Float, y:Float)
+	public function new(value:ToppingEnum, x:Float)
 	{
 		super();
 		this.value = value;
 		this.x = x;
-		this.y = y;
+		this.y = FlxG.height - 350;
 		this.loadGraphic("assets/images/ingredients/" + value + ".png");
+		this.scale.set(3, 3);
+		this.updateHitbox();
 		this.draggableTopping = null;
 		this.enableMouseClicks(false);
 	}
@@ -52,7 +54,7 @@ class Topping extends FlxExtendedSprite
 			else
 			{
 				// Initialize the draggable topping and set the dragging image.
-				draggableTopping = new Topping(this.value, this.x, this.y);
+				draggableTopping = new Topping(this.value, this.x);
 				draggableTopping.loadGraphic("assets/images/large/" + this.value + "_clump_large.png");
 				draggableTopping.scale.set(0.4, 0.4);
 				draggableTopping.updateHitbox();
