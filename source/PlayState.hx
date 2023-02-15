@@ -309,6 +309,7 @@ class PlayState extends FlxState
 
 	function servePizza(pizza:Pizza, order:PizzaOrder)
 	{
+		// keep track of served pizzas
 		pizzasServed++;
 
 		// variable that will track our profit or loss
@@ -332,7 +333,7 @@ class PlayState extends FlxState
 			}
 			else
 			{
-				trace('incorrect: ' + topp.getName());
+				// decrease profit because of wasted ingredient
 				profit -= 5;
 			}
 		}
@@ -340,7 +341,6 @@ class PlayState extends FlxState
 		// deduct if missing toppings
 		if (order.ordArray.length > 0)
 		{
-			trace('missing: ' + order.ordArray.length);
 			profit -= 5 * order.ordArray.length;
 		}
 
