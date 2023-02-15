@@ -9,6 +9,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.addons.plugin.FlxMouseControl;
+import flixel.addons.ui.FlxButtonPlus;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.mouse.FlxMouseEventManager;
@@ -35,12 +36,13 @@ class PlayState extends FlxState
 	var patienceEvent:Event<Void->Void>;
 	var customers:Array<Customer>;
 
-	var pId = 0;
 	private var difficulty = 0;
 
 	var balance:Int = 100;
 	var balanceText:FlxText;
+	var currentOrder:PizzaOrder;
 
+	var pizzasServed:Int = 0;
 	var tickets:Array<Ticket> = new Array<Ticket>();
 
 	// var ticket:FlxSprite;
@@ -300,6 +302,8 @@ class PlayState extends FlxState
 
 	function servePizza(pizza:Pizza, order:PizzaOrder)
 	{
+		pizzasServed++;
+
 		// variable that will track our profit or loss
 		var profit:Int = 0;
 
@@ -314,7 +318,7 @@ class PlayState extends FlxState
 		{
 			if (order.ordArray.contains(topp.getName()))
 			{
-				trace('correct: ' + topp.getName());
+				// pizza.toppings.remove(topp);
 				profit += 5;
 
 				order.ordArray.remove(topp.getName());
@@ -347,9 +351,25 @@ class PlayState extends FlxState
 	function endGame()
 	{
 		trace("Endgame activated");
-		var finalText = new FlxText(0, 0, FlxG.width * 0.8, "You are out of money! You served " + pId + " orders");
+		var finalText = new FlxText(0, 0, FlxG.width * 0.8, "You are out of money! You served " + pizzasServed + " orders", 64);
+		pizza.kill();
+		pizzaToppings.kill();
+		pizzaToppings.destroy();
+
 		finalText.autoSize = true;
 		finalText.screenCenter();
+		finalText.color = FlxColor.RED;
 		add(finalText);
+
+		var menuButton = new FlxButtonPlus(0, 0, goToMenuState, "Back to main menu");
+		menuButton.setSize(2.0, 2.0);
+		menuButton.screenCenter();
+		menuButton.y += finalText.height;
+		add(menuButton);
+	}
+
+	function goToMenuState()
+	{
+		FlxG.switchState(new MenuState(pizzasServed));
 	}
 }
