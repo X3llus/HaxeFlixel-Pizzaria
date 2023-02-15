@@ -12,6 +12,7 @@ import flixel.addons.plugin.FlxMouseControl;
 import flixel.addons.ui.FlxButtonPlus;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
+import flixel.util.FlxColor;
 import haxe.Timer;
 import lime.app.Event;
 
@@ -106,14 +107,13 @@ class PlayState extends FlxState
 		patienceEvent = new Event<Void->Void>();
 		patienceEvent.add(function()
 		{
-			customers.shift();
 			resetTickets();
-			tickets.shift();
+			customers.shift();
 			displayTicket();
 		});
 
 		customers.push(new Customer(difficulty, patienceEvent));
-		resetTickets();
+		// resetTickets();
 		displayTicket();
 
 		// time of playthrough counter
@@ -127,13 +127,13 @@ class PlayState extends FlxState
 				trace("Difficulty increased: " + difficulty);
 			}
 			// Ramping speed
-			if (difIncrease % 20 == 0 && speed < 10)
+			if (difIncrease % 20 == 0 && speed < 5)
 			{
 				speed++;
 				trace("Speed increased: " + speed);
 			}
 			// Add new customer
-			if (difIncrease % (15 - speed) == 0)
+			if (difIncrease % (10 - speed) == 0 && customers.length < 5)
 			{
 				customers.push(new Customer(difficulty, patienceEvent));
 				trace("New customer added: " + customers.length);
@@ -174,21 +174,16 @@ class PlayState extends FlxState
 			FlxG.overlap(trash, pizza, resetPizza);
 			for (i in 0...tickets.length)
 			{
-				try
+				var overlap = FlxG.overlap(pizza, tickets[i].ticket);
+				if (overlap)
 				{
-					var overlap = FlxG.overlap(pizza, tickets[i].ticket);
-					if (overlap)
-					{
-						servePizza(pizza, customers[i].order);
-						customers.splice(i, 1);
-						resetTickets();
-						tickets.splice(i, 1);
-						displayTicket();
-					}
-				}
-				catch (e:Dynamic)
-				{
-					continue;
+					trace("Pizza served to customer " + tickets.length);
+					trace("Customer order: " + tickets);
+					servePizza(pizza, customers[i].order);
+					customers.splice(i, 1);
+					resetTickets();
+					tickets.splice(i, 1);
+					displayTicket();
 				}
 			}
 		}
@@ -208,6 +203,7 @@ class PlayState extends FlxState
 			remove(ticket.t3);
 			remove(ticket.t4);
 		}
+		tickets = [];
 	}
 
 	function displayTicket()
