@@ -8,6 +8,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
+import flixel.addons.display.FlxExtendedSprite;
 import flixel.addons.plugin.FlxMouseControl;
 import flixel.addons.ui.FlxButtonPlus;
 import flixel.graphics.FlxGraphic;
@@ -24,7 +25,7 @@ class PlayState extends FlxState
 	var toppings:FlxTypedGroup<Topping>;
 	var pizza:Pizza;
 	var oven:Oven;
-	var trash:FlxSprite;
+	var trash:FlxExtendedSprite;
 
 	public var draggedTopping:Topping;
 	public var pizzaToppings:FlxTypedGroup<ToppingSprite>;
@@ -91,7 +92,11 @@ class PlayState extends FlxState
 		oven = new Oven(200, 500);
 		add(oven);
 		// create trash sprite
-		trash = new FlxSprite(0, 500, "assets/images/environment/trash.png");
+		trash = new FlxExtendedSprite(0, 500, "assets/images/environment/trash.png");
+		trash.enableMouseClicks(true);
+		trash.mousePressedCallback = (sprite, _, _) -> {
+			resetPizza(sprite, pizza);
+		}
 		add(trash);
 
 		// display first ticket

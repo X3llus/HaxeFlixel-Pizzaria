@@ -20,8 +20,6 @@ class Ticket {
 
         trace("Ticket number " + xStart);
 
-        
-
         tHead = new flixel.text.FlxText(39 + xStart, 100, 0, "Current Order", 12);
         t1 = new flixel.text.FlxText(39 + xStart, 135, 0, "", 12);
         t2 = new flixel.text.FlxText(39 + xStart, 165, 0, "", 12);
