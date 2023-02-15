@@ -28,7 +28,6 @@ class PlayState extends FlxState
 	var trash:FlxExtendedSprite;
 
 	public var draggedTopping:Topping;
-	public var pizzaToppings:FlxTypedGroup<ToppingSprite>;
 
 	var difIncrease:Int = 0;
 	var speed:Int = 0;
@@ -379,8 +378,6 @@ class PlayState extends FlxState
 		trace("Endgame activated");
 		var finalText = new FlxText(0, 0, FlxG.width * 0.8, "You are out of money! You served " + pizzasServed + " orders", 64);
 		pizza.kill();
-		pizzaToppings.kill();
-		pizzaToppings.destroy();
 
 		finalText.autoSize = true;
 		finalText.screenCenter();
