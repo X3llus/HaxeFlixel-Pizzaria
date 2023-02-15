@@ -193,6 +193,14 @@ class PlayState extends FlxState
 		super.update(elapsed);
 	}
 
+	// needed to convert overlapping with ticket sprite into calling serving order
+	function serveHelper(pizza:Pizza, ticket:FlxSprite)
+	{
+		{
+			servePizza(pizza, currentOrder);
+		}
+	}
+
 	function resetTickets()
 	{
 		// Reset the tickets
@@ -317,7 +325,7 @@ class PlayState extends FlxState
 		{
 			if (order.ordArray.contains(topp.getName()))
 			{
-				trace('correct: ' + topp.getName());
+				// pizza.toppings.remove(topp);
 				profit += 5;
 
 				order.ordArray.remove(topp.getName());
