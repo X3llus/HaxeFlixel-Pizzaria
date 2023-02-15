@@ -68,7 +68,7 @@ class PlayState extends FlxState
 
 		FlxG.debugger.visible = true;
 		// play bg music and loop
-		new AssetsUtil().playBGMusic(.01);
+		new AssetsUtil().playBGMusic(.2);
 
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
