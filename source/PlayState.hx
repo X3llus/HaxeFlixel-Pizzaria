@@ -61,6 +61,12 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
+		var background = new FlxSprite(0,0);
+		background.loadGraphic("assets/images/environment/bg.png");
+		background.scale.set( 1,1);
+		add(background); 
+		background.screenCenter();
+		
 		FlxG.debugger.visible = true;
 		// play bg music and loop
 		new AssetsUtil().playBGMusic(.01);
