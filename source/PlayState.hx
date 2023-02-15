@@ -385,8 +385,8 @@ class PlayState extends FlxState
 		finalText.color = FlxColor.RED;
 		add(finalText);
 
-		var menuButton = new FlxButton(0, 0, "Back to main menu", goToMenuState);
-		// menuButton.setSize(2.0, 2.0);
+		var menuButton = new FlxButtonPlus(0, 0, goToMenuState, "Back to main menu");
+		menuButton.setSize(2.0, 2.0);
 		menuButton.screenCenter();
 		menuButton.y += finalText.height;
 		add(menuButton);
