@@ -64,7 +64,7 @@ class PlayState extends FlxState
 		var background = new FlxBackdrop("assets/images/environment/bg.jpg", FlxAxes.XY);
 		background.scale.set(0.25, 0.25);
 		add(background);
-		
+
 		FlxG.debugger.visible = true;
 		// play bg music and loop
 		new AssetsUtil().playBGMusic(.01);
@@ -88,7 +88,7 @@ class PlayState extends FlxState
 		add(pizza);
 
 		// Create an oven
-		oven = new Oven(200, 500);
+		oven = new Oven(FlxG.width - 200, FlxG.height / 2);
 		add(oven);
 		// create trash sprite
 		trash = new FlxSprite(0, 500, "assets/images/environment/trash.png");
@@ -285,7 +285,7 @@ class PlayState extends FlxState
 	{
 		// We must immediately move the pizza to its finished position and make it invisible
 		// Some how the overlap is still triggered 4 times before this runs.
-		pizza.x = oven.x + 800; // move to the right of pizza, this can be changed
+		pizza.x = FlxG.width / 2 - pizza.width / 2;
 		pizza.visible = false;
 		oven.cookPizza(pizza);
 	}

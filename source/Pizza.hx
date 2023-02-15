@@ -27,7 +27,7 @@ class Pizza extends FlxExtendedSprite
 	{
 		super();
 		loadGraphic(AssetPaths.round_dough_large__png);
-		this.scale.set(0.4, 0.4);
+		this.scale.set(0.2, 0.2);
 		this.updateHitbox();
 		this.x = FlxG.width / 2 - width / 2;
 		this.y = FlxG.height / 2 - height / 2;

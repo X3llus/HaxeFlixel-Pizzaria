@@ -14,8 +14,7 @@ class Oven extends FlxSprite
 		super();
 		this.x = x;
 		this.y = y;
-		this.scale.x = 2;
-		this.scale.y = 2;
+		this.scale.set(5,5);
 		this.updateHitbox();
 		this.ovenEmpty = true;
 		this.loadGraphic("assets/images/environment/oven.png");
@@ -47,7 +46,7 @@ class Oven extends FlxSprite
 		pizza.visible = true; // Make the pizza visible again
 		// update the pizza's graphic now that the cooked status has changed
 		var graphicFix = new FlxSprite();
-		graphicFix.loadGraphic(AssetPaths.cooked_dough__png);
+		graphicFix.loadGraphic(AssetPaths.cooked_dough_large__png);
 		pizza.stamp(graphicFix);
 		for (i in 0...pizza.toppings.length)
 		{
