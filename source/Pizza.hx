@@ -17,13 +17,10 @@ class Pizza extends FlxExtendedSprite
 	**/
 	public var toppings:Array<ToppingEnum>;
 
-	/** Reference to external container of this pizza's toppings */
-	public var toppingSprites:FlxTypedGroup<ToppingSprite>;
-
 	public var sauce:String;
 	public var cooked:Bool;
 
-	public function new(toppingGroup:FlxTypedGroup<ToppingSprite>)
+	public function new()
 	{
 		super();
 		loadGraphic(AssetPaths.round_dough_large__png);
@@ -35,7 +32,6 @@ class Pizza extends FlxExtendedSprite
 		this.cooked = false;
 		this.toppings = new Array<ToppingEnum>();
 		enableMouseDrag();
-		toppingSprites = toppingGroup;
 	}
 
 	/**
@@ -59,7 +55,6 @@ class Pizza extends FlxExtendedSprite
 	public function addTopping(topping:ToppingEnum)
 	{
 		toppings.push(topping);
-		toppingSprites.add(new ToppingSprite(topping));
 		trace(toppings);
 		updateGraphic(topping);
 	}
@@ -71,14 +66,6 @@ class Pizza extends FlxExtendedSprite
 	{
 		var tempTopping:ToppingSprite;
 		tempTopping = new ToppingSprite(topping, cooked);
-
-		// place ingredient sprite over the pizza
-		var xPos:Int = Std.int((this.width / 2));
-		var yPos:Int = Std.int((this.height / 2));
-
 		stamp(tempTopping);
-
-		// Add the ingredient to the toppingSprites group
-		toppingSprites.add(tempTopping);
 	}
 }

@@ -82,10 +82,9 @@ class PlayState extends FlxState
 		createTopping(dark_sauce, 800);
 		createTopping(light_sauce, 1000);
 		add(toppings);
-		pizzaToppings = new FlxTypedGroup<ToppingSprite>();
 
 		// Create a pizza
-		pizza = new Pizza(pizzaToppings);
+		pizza = new Pizza();
 		add(pizza);
 
 		// Create an oven

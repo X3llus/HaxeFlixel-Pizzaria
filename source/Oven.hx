@@ -14,7 +14,7 @@ class Oven extends FlxSprite
 		super();
 		this.x = x;
 		this.y = y;
-		this.scale.set(5,5);
+		this.scale.set(5, 5);
 		this.updateHitbox();
 		this.ovenEmpty = true;
 		this.loadGraphic("assets/images/environment/oven.png");
@@ -28,8 +28,6 @@ class Oven extends FlxSprite
 		this.loadGraphic("assets/images/environment/oven-closed.png");
 		// Cook the pizza after x seconds
 		var timer = new FlxTimer();
-		// remove toppings (invisble) while the pizza is in the oven
-		pizza.toppingSprites.clear();
 		timer.start(5.0, updatePizza, 1);
 	}
 
