@@ -3,9 +3,11 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.ui.FlxButtonPlus;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 
 class MenuState extends FlxState
@@ -16,6 +18,7 @@ class MenuState extends FlxState
 	private var difficulty:FlxText;
 	private var complexity:FlxText;
 	private var background:FlxSprite;
+	private var decreaseDifficulty:FlxButton;
 	private var increaseDifficulty:FlxButton;
 	private var play:FlxButton;
 	private var totalPoints = 0;
@@ -37,11 +40,16 @@ class MenuState extends FlxState
 				background.loadGraphic(AssetPaths.backgroundPizza__png, false, image-width, image-height, true); 
 			add(background); */
 
+		var background = new FlxBackdrop("assets/images/environment/bg.jpg", FlxAxes.XY);
+		background.scale.set(0.25, 0.25);
+		add(background);
+
 		// Set game title
 		title = new FlxText(50, 0, 0, "Welcome to HaxeFlixel Pizzaria!", 30);
 		title.alignment = CENTER;
 		title.screenCenter(X);
 		title.y = 30;
+		title.replaceColor(FlxColor.WHITE, FlxColor.BLACK);
 		add(title);
 
 		// Display
@@ -67,6 +75,7 @@ class MenuState extends FlxState
 		rules.alignment = CENTER;
 		rules.screenCenter(X);
 		rules.y = score.y + 100;
+		rules.replaceColor(FlxColor.WHITE, FlxColor.BLACK);
 		add(rules);
 
 		// Initial Difficulty
@@ -75,6 +84,12 @@ class MenuState extends FlxState
 		difficulty.screenCenter(X);
 		difficulty.y = rules.height + 200;
 		add(difficulty);
+
+		// Decrease Difficulty button
+		decreaseDifficulty = new FlxButton(0, 0, "v", clickEasier);
+		decreaseDifficulty.x = (difficulty.x - (150 - difficulty.width) - decreaseDifficulty.width);
+		decreaseDifficulty.y = (difficulty.y + 5);
+		add(decreaseDifficulty);
 
 		// Increase Difficulty button
 		increaseDifficulty = new FlxButton(0, 0, "^", clickHarder);
@@ -110,6 +125,29 @@ class MenuState extends FlxState
 		super.create();
 	}
 
+	private function clickEasier()
+	{
+		switch (currentDifficulty)
+		{
+			case 0:
+				currentDifficulty=2;
+				difficulty.text = "Hard";
+				complexity.text = "Maximum toppings per pizza: 5";
+			case 1:
+				currentDifficulty--;
+				difficulty.text = "Easy";
+				complexity.text = "Maximum toppings per pizza: 3";
+			case 2:
+				currentDifficulty--;
+				difficulty.text = "Normal";
+				complexity.text = "Maximum toppings per pizza: 4";
+			default:
+				currentDifficulty = 0;
+				difficulty.text = "Easy";
+				complexity.text = "Maximum toppings per pizza: 3";
+		}
+	}
+
 	private function clickHarder()
 	{
 		switch (currentDifficulty)
@@ -117,24 +155,21 @@ class MenuState extends FlxState
 			case 0:
 				currentDifficulty++;
 				difficulty.text = "Normal";
-				// difficulty.updateInactiveButtonColors([0xffe9f02d, 0xffecf254]);
 				complexity.text = "Maximum toppings per pizza: 4";
 			case 1:
 				currentDifficulty++;
 				difficulty.text = "Hard";
-				// difficulty.updateInactiveButtonColors([0xff9f0f0f, 0xffd43030]);
 				complexity.text = "Maximum toppings per pizza: 5";
 			case 2:
 				currentDifficulty = 0;
 				difficulty.text = "Easy";
-				// difficulty.updateInactiveButtonColors([0xff0d910d, 0xff00ff00]);
 				complexity.text = "Maximum toppings per pizza: 3";
 			default:
 				currentDifficulty = 0;
 				difficulty.text = "Easy";
-				// difficulty.updateInactiveButtonColors([0xff0d910d, 0xff00ff00]);
 				complexity.text = "Maximum toppings per pizza: 3";
 		}
+
 	}
 
 	// Called when the play button is pressed, switches to PlayState
