@@ -53,14 +53,16 @@ class Topping extends FlxExtendedSprite
 			{
 				// Initialize the draggable topping and set the dragging image.
 				draggableTopping = new Topping(this.value, this.x, this.y);
-				draggableTopping.loadGraphic("assets/images/drag-n-drop/" + this.value + "_clump.png");
+				draggableTopping.loadGraphic("assets/images/large/" + this.value + "_clump_large.png");
+				draggableTopping.scale.set(0.4, 0.4);
+				draggableTopping.updateHitbox();
 				// Add the topping to the display
 				FlxG.state.add(draggableTopping);
 			}
 			draggableTopping.enableMouseDrag();
 			draggableTopping.isDragged = true;
-			draggableTopping._dragOffsetX = 30;
-			draggableTopping._dragOffsetY = 30;
+			draggableTopping._dragOffsetX = 180;
+			draggableTopping._dragOffsetY = 180;
 		}
 
 		if (mousePressedCallback != null)

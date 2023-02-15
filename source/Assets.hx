@@ -47,39 +47,39 @@ class ToppingSprite extends FlxExtendedSprite
 		switch topping
 		{
 			case ToppingEnum.pepperoni:
-				loadGraphic(AssetPaths.pepperoni_topping__png);
+				loadGraphic(AssetPaths.pepperoni_topping_large__png);
 			case ToppingEnum.mushroom:
-				loadGraphic(AssetPaths.mushroom_topping__png);
+				loadGraphic(AssetPaths.mushroom_topping_large__png);
 			case ToppingEnum.yellow_cheese:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_yellow_cheese__png);
+					loadGraphic(AssetPaths.cooked_yellow_cheese_large__png);
 				else
 				{
-					loadGraphic(AssetPaths.yellow_cheese_topping__png);
+					loadGraphic(AssetPaths.yellow_cheese_topping_large__png);
 				}
 			case ToppingEnum.white_cheese:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_white_cheese__png);
+					loadGraphic(AssetPaths.cooked_white_cheese_large__png);
 				else
 				{
-					loadGraphic(AssetPaths.white_cheese_topping__png);
+					loadGraphic(AssetPaths.white_cheese_topping_large__png);
 				}
 			case ToppingEnum.light_sauce:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_light_sauce__png);
+					loadGraphic(AssetPaths.cooked_light_sauce_large__png);
 				else
 				{
-					loadGraphic(AssetPaths.light_sauce_topping__png);
+					loadGraphic(AssetPaths.light_sauce_topping_large__png);
 				}
 			case ToppingEnum.dark_sauce:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_dark_sauce__png);
+					loadGraphic(AssetPaths.cooked_dark_sauce_large__png);
 				else
 				{
-					loadGraphic(AssetPaths.dark_sauce_topping__png);
+					loadGraphic(AssetPaths.dark_sauce_topping_large__png);
 				}
-				updateHitbox();
 		}
+		updateHitbox();
 	}
 }
 
