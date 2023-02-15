@@ -27,8 +27,8 @@ class Pizza extends FlxExtendedSprite
 	{
 		super();
 		loadGraphic(AssetPaths.round_dough__png);
-		x = FlxG.width / 2 - width / 2;
-		y = FlxG.height / 2 - height / 2;
+		this.x = FlxG.width / 2 - width / 2;
+		this.y = FlxG.height / 2 - height / 2;
 		this.cooked = false;
 		this.toppings = new Array<ToppingEnum>();
 		enableMouseClicks(false);
@@ -44,8 +44,8 @@ class Pizza extends FlxExtendedSprite
 		var graphicFix = new FlxSprite();
 		graphicFix.loadGraphic(AssetPaths.round_dough_reset__png);
 		stamp(graphicFix);
-		this.x = 250;
-		this.y = 250;
+		this.x = FlxG.width / 2 - width / 2;
+		this.y = FlxG.height / 2 - height / 2;
 		this.cooked = false;
 		for (i in 0...toppings.length)
 			toppings.shift();
