@@ -1,6 +1,7 @@
 package;
 
 import Assets.AssetsUtil;
+import Assets.ToppingSprite;
 import PizzaOrder;
 import Topping.ToppingEnum;
 import flixel.FlxG;
@@ -21,20 +22,19 @@ import lime.app.Event;
 class PlayState extends FlxState
 {
 	var toppings:FlxTypedGroup<Topping>;
-	var sauces:FlxTypedGroup<Sauce>;
 	var pizza:Pizza;
 	var oven:Oven;
 	var trash:FlxSprite;
 
 	public var draggedTopping:Topping;
-	public var pizzaToppings:FlxTypedGroup<FlxSprite>;
+	public var pizzaToppings:FlxTypedGroup<ToppingSprite>;
 
 	var difIncrease:Int = 0;
 	var speed:Int = 0;
 	var counter:Timer;
 	var patienceEvent:Event<Void->Void>;
 	var customers:Array<Customer>;
-  
+
 	var pId = 0;
 	private var difficulty = 0;
 
@@ -42,8 +42,8 @@ class PlayState extends FlxState
 	var balanceText:FlxText;
 
 	var tickets:Array<Ticket> = new Array<Ticket>();
-	// var ticket:FlxSprite;
 
+	// var ticket:FlxSprite;
 	// Random Number generator
 	public function randomRangeInt(min:Int, max:Int):Int
 	{
@@ -61,7 +61,7 @@ class PlayState extends FlxState
 		super.create();
 		FlxG.debugger.visible = true;
 		// play bg music and loop
-		new AssetsUtil().playBGMusic(.32);
+		new AssetsUtil().playBGMusic(.01);
 
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
@@ -76,12 +76,10 @@ class PlayState extends FlxState
 		createTopping(light_sauce, 500, 600);
 		add(toppings);
 
-		pizzaToppings = new FlxTypedGroup<FlxSprite>();
+		pizzaToppings = new FlxTypedGroup<ToppingSprite>();
 		// Create a pizza
 		pizza = new Pizza(pizzaToppings);
 		add(pizza);
-		// place ingrdient spirte over the pizza
-		add(pizzaToppings);
 
 		// Create an oven
 		oven = new Oven(200, 500);
@@ -103,7 +101,8 @@ class PlayState extends FlxState
 		// Customer setup
 		customers = [];
 		patienceEvent = new Event<Void->Void>();
-		patienceEvent.add(function () {
+		patienceEvent.add(function()
+		{
 			customers.shift();
 			resetTickets();
 			tickets.shift();
@@ -116,19 +115,23 @@ class PlayState extends FlxState
 
 		// time of playthrough counter
 		counter = new haxe.Timer(1000);
-		counter.run = function() {
+		counter.run = function()
+		{
 			difIncrease++;
-			if (difficulty < 2 && difIncrease % 30 == 0) {
+			if (difficulty < 2 && difIncrease % 30 == 0)
+			{
 				difficulty++;
 				trace("Difficulty increased: " + difficulty);
 			}
 			// Ramping speed
-			if (difIncrease % 20 == 0 && speed < 10) {
+			if (difIncrease % 20 == 0 && speed < 10)
+			{
 				speed++;
 				trace("Speed increased: " + speed);
 			}
 			// Add new customer
-			if (difIncrease % (15-speed) == 0) {
+			if (difIncrease % (15 - speed) == 0)
+			{
 				customers.push(new Customer(difficulty, patienceEvent));
 				trace("New customer added: " + customers.length);
 				resetTickets();
@@ -139,7 +142,6 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-	
 		// TODO: check if current order is null, if so, get next customers order.
 
 		/**
@@ -167,17 +169,22 @@ class PlayState extends FlxState
 		{
 			FlxG.overlap(oven, pizza, cookPizza);
 			FlxG.overlap(trash, pizza, resetPizza);
-			for (i in 0...tickets.length) {
-				try {
+			for (i in 0...tickets.length)
+			{
+				try
+				{
 					var overlap = FlxG.overlap(pizza, tickets[i].ticket);
-					if (overlap) {
-							servePizza(pizza, customers[i].order);
-							customers.splice(i, 1);
-							resetTickets();
-							tickets.splice(i, 1);
-							displayTicket();
+					if (overlap)
+					{
+						servePizza(pizza, customers[i].order);
+						customers.splice(i, 1);
+						resetTickets();
+						tickets.splice(i, 1);
+						displayTicket();
 					}
-				} catch (e:Dynamic) {
+				}
+				catch (e:Dynamic)
+				{
 					continue;
 				}
 			}
@@ -188,7 +195,8 @@ class PlayState extends FlxState
 	function resetTickets()
 	{
 		// Reset the tickets
-		for (i in 0...tickets.length) {
+		for (i in 0...tickets.length)
+		{
 			var ticket = tickets[i];
 			remove(ticket.ticket);
 			remove(ticket.tHead);
@@ -269,15 +277,6 @@ class PlayState extends FlxState
 	}
 
 	/**
-		Creates a new sauce with given ToppingEnum and x,y coordinates
-	**/
-	function createSauce(sauce:ToppingEnum, x:Float, y:Float)
-	{
-		var sauce = new Sauce(sauce, x, y);
-		sauces.add(sauce);
-	}
-
-	/**
 		Moves the pizza and makes it invisible, then calls the cookPizza function
 			from the Oven class to cook the pizza
 	**/
@@ -296,12 +295,7 @@ class PlayState extends FlxState
 	function resetPizza(trash:FlxSprite, pizza:Pizza)
 	{
 		// move pizza back to the initial position
-		pizza.x = FlxG.width / 2 - pizza.width / 2;
-		pizza.y = FlxG.height / 2 - pizza.height / 2;
-		pizza.cooked = false;
-		for (i in 0...pizza.toppings.length)
-			pizza.toppings.shift();
-		pizza.updateGraphic();
+		pizza.resetPizza();
 	}
 
 	function servePizza(pizza:Pizza, order:PizzaOrder)
@@ -311,6 +305,7 @@ class PlayState extends FlxState
 
 		if (pizza.cooked == false)
 		{
+			trace('Uncooked');
 			profit -= 10;
 		}
 
@@ -319,12 +314,14 @@ class PlayState extends FlxState
 		{
 			if (order.ordArray.contains(topp.getName()))
 			{
+				trace('correct: ' + topp.getName());
 				profit += 5;
 
 				order.ordArray.remove(topp.getName());
 			}
 			else
 			{
+				trace('incorrect: ' + topp.getName());
 				profit -= 5;
 			}
 		}
@@ -332,13 +329,14 @@ class PlayState extends FlxState
 		// deduct if missing toppings
 		if (order.ordArray.length > 0)
 		{
+			trace('missing: ' + order.ordArray.length);
 			profit -= 5 * order.ordArray.length;
 		}
 
 		balance += profit;
 		balanceText.text = "Your balance: $" + balance;
 
-		resetPizza(trash, pizza);
+		pizza.resetPizza();
 
 		if (balance < 0)
 		{

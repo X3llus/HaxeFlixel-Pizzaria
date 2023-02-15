@@ -29,7 +29,7 @@ class Oven extends FlxSprite
 		this.loadGraphic("assets/images/environment/oven-closed.png");
 		// Cook the pizza after x seconds
 		var timer = new FlxTimer();
-		//remove toppings (invisble) while the pizza is in the oven
+		// remove toppings (invisble) while the pizza is in the oven
 		pizza.toppingSprites.clear();
 		timer.start(5.0, updatePizza, 1);
 	}
@@ -46,6 +46,12 @@ class Oven extends FlxSprite
 		trace("pizza cooked");
 		pizza.visible = true; // Make the pizza visible again
 		// update the pizza's graphic now that the cooked status has changed
-		pizza.updateGraphic();
+		var graphicFix = new FlxSprite();
+		graphicFix.loadGraphic(AssetPaths.cooked_dough__png);
+		pizza.stamp(graphicFix);
+		for (i in 0...pizza.toppings.length)
+		{
+			pizza.updateGraphic(pizza.toppings[i], true);
+		}
 	}
 }
