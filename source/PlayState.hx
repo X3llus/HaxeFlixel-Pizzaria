@@ -1,6 +1,5 @@
 package;
 
-import flixel.util.FlxColor;
 import Assets.AssetsUtil;
 import Assets.ToppingSprite;
 import PizzaOrder;
@@ -8,10 +7,14 @@ import Topping.ToppingEnum;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.plugin.FlxMouseControl;
 import flixel.addons.ui.FlxButtonPlus;
+import flixel.graphics.FlxGraphic;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
+import flixel.util.FlxAxes;
+import flixel.util.FlxColor;
 import flixel.util.FlxColor;
 import haxe.Timer;
 import lime.app.Event;
@@ -57,11 +60,10 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
-		var background = new FlxSprite(0,0);
-		background.loadGraphic("assets/images/environment/bg.png");
-		background.scale.set( 1,1);
-		add(background); 
-		background.screenCenter();
+		// var backgroundSprite = new FlxGraphic("assets/images/environment/bg.png");
+		var background = new FlxBackdrop("assets/images/environment/bg.jpg", FlxAxes.XY);
+		background.scale.set(0.25, 0.25);
+		add(background);
 		
 		FlxG.debugger.visible = true;
 		// play bg music and loop
