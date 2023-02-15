@@ -50,17 +50,37 @@ class MenuState extends FlxState
 		score.y = title.y + 30;
 
 		// Rules of the game
-		rules = new FlxText(50, 0, 0, "INSERT RULES / GUIDELINES HERE", 10);
+		rules = new FlxText(50, 0, 0,
+			"  Basic Rules: As described in the concept, the basic rules of the game are simple. The player will receive orders with specific pizzas, 
+			                             and it is your job to accurately replicate the order, within the customer's patience. Your score will be impacted by the accuracy of your pizza, 
+			                             and if you cant complete a customer's order before there paitence runs out, you will lose score. The control scheme for the game revolves around 
+			                             mouse click and mouse drag interactions. Instructions for creating your pizza are detailed below.
+
+			               Creating Your Pizza:
+
+	     							     Pizza Dough: Pizza dough will spawn on the user's screen, and be the base of your pizza. Once you finish and submit your pizza, a new pizza dough will appear.
+									   
+									     Adding Ingredients: To add an ingredient to your pizza, simply locate the appropriate ingredient on your UI, and drag it onto your pizza dough, you will then 
+									     notice it appear on your pizza.
+									   
+									     Following your order: As previously stated, it is important that you follow the customer's order when creating your pizzas. Adding extra ingredients, or 
+									     failing to include some required ingredients will impact your score and performance. It is important to work on the order that was first in the queue, as 
+									     working on other orders will not provide you with the correct score (You will be handing customers 1 customer 3’s order if you do not follow this rule). 
+									     It is also important to note that as a part of your challenge, you cannot undo any ingredients or start over, so be careful with what you place on your pizza.
+
+									     More Rules and detials found at: https://docs.google.com/document/d/1aPKpBNn7B7GIKRlpjAQMcnFjv93RzyuX0riykhti_Y8/edit?usp=viewing OR within project documents",
+			15);
+
 		rules.alignment = CENTER;
 		rules.screenCenter(X);
-		rules.y = score.y + 30;
+		rules.y = score.y + 100;
 		add(rules);
 
 		// Initial Difficulty
 		difficulty = new FlxText(50, 0, 130, "Easy", 20);
 		difficulty.alignment = CENTER;
 		difficulty.screenCenter(X);
-		difficulty.y = rules.y + 30;
+		difficulty.y = rules.y + 375;
 		add(difficulty);
 
 		// Increase Difficulty button
@@ -78,7 +98,7 @@ class MenuState extends FlxState
 		// Centered Play button to start/restart the game
 		play = new FlxButton(0, 0, "Play", clickPlay);
 		play.x = (FlxG.width / 2) - (play.width / 2);
-		play.y = (FlxG.height / 2);
+		play.y = (FlxG.height / 2 + 75);
 		add(play);
 
 		super.create();
