@@ -45,6 +45,13 @@ class PlayState extends FlxState
 	var pizzasServed:Int = 0;
 	var tickets:Array<Ticket> = new Array<Ticket>();
 
+	
+	//sounds
+	var soundPlace:flixel.system.FlxSound;
+	var soundTimer:flixel.system.FlxSound;
+	var soundFire:flixel.system.FlxSound;
+	var soundScore:flixel.system.FlxSound;
+	var soundTicket:flixel.system.FlxSound;
 	// var ticket:FlxSprite;
 	// Random Number generator
 	public function randomRangeInt(min:Int, max:Int):Int
@@ -66,9 +73,16 @@ class PlayState extends FlxState
 		background.scale.set(0.25, 0.25);
 		add(background);
 
-		FlxG.debugger.visible = true;
+		FlxG.debugger.visible = false;
 		// play bg music and loop
-		new AssetsUtil().playBGMusic(.2);
+		//sounds
+		FlxG.sound.playMusic("assets/music/background.ogg");
+
+		soundPlace = FlxG.sound.load("assets/sounds/place.wav");
+		soundFire  = FlxG.sound.load("assets/sounds/fire.wav");
+		soundTimer =   FlxG.sound.load("assets/sounds/timer.wav");
+		soundScore =   FlxG.sound.load("assets/sounds/score.wav");
+		soundTicket =   FlxG.sound.load("assets/sounds/ticket.wav");
 
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
@@ -194,6 +208,7 @@ class PlayState extends FlxState
 					resetTickets();
 					tickets.splice(i, 1);
 					displayTicket();
+					break;
 				}
 			}
 		}
@@ -234,6 +249,7 @@ class PlayState extends FlxState
 			customers[i].order.displayOrder(customers[i].order, ticket.t1, ticket.t2, ticket.t3, ticket.t4);
 
 			xStart += Std.int(ticket.ticket.width) + 10;
+			soundTicket.play();
 		}
 	}
 
@@ -261,6 +277,7 @@ class PlayState extends FlxState
 		if (FlxG.pixelPerfectOverlap(topping, pizza))
 		{
 			pizza.addTopping(topping.value);
+			soundPlace.play();
 		}
 		topping.kill();
 	}
@@ -296,6 +313,8 @@ class PlayState extends FlxState
 		pizza.x = FlxG.width / 2 - pizza.width / 2;
 		pizza.visible = false;
 		oven.cookPizza(pizza);
+		soundFire.play();
+
 	}
 
 	/**
@@ -346,7 +365,7 @@ class PlayState extends FlxState
 
 		balance += profit;
 		balanceText.text = "Your balance: $" + balance;
-
+		soundScore.play();
 		pizza.resetPizza();
 
 		if (balance < 0)
