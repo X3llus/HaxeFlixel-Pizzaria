@@ -50,7 +50,7 @@ class Pizza extends FlxExtendedSprite
 	}
 
 	/**
-		topping:String - any of the toppings in the game
+		topping:ToppingEnum - any of the toppings in the game
 	**/
 	public function addTopping(topping:ToppingEnum)
 	{
@@ -60,7 +60,7 @@ class Pizza extends FlxExtendedSprite
 	}
 
 	/**
-	 * Update Pizza graphic based on the current toppings
+	 * Stamps the corresponding topping graphic onto the pizza
 	 */
 	public function updateGraphic(topping:ToppingEnum, cooked:Bool = false)
 	{
