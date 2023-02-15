@@ -26,9 +26,12 @@ class Pizza extends FlxExtendedSprite
 	public function new(toppingGroup:FlxTypedGroup<ToppingSprite>)
 	{
 		super();
-		loadGraphic(AssetPaths.round_dough__png);
+		loadGraphic(AssetPaths.round_dough_large__png);
+		this.scale.set(0.2, 0.2);
+		this.updateHitbox();
 		this.x = FlxG.width / 2 - width / 2;
 		this.y = FlxG.height / 2 - height / 2;
+
 		this.cooked = false;
 		this.toppings = new Array<ToppingEnum>();
 		enableMouseDrag();
@@ -41,7 +44,7 @@ class Pizza extends FlxExtendedSprite
 	public function resetPizza()
 	{
 		var graphicFix = new FlxSprite();
-		graphicFix.loadGraphic(AssetPaths.round_dough_reset__png);
+		graphicFix.loadGraphic(AssetPaths.round_dough_large_reset__png);
 		stamp(graphicFix);
 		this.x = FlxG.width / 2 - width / 2;
 		this.y = FlxG.height / 2 - height / 2;
@@ -70,10 +73,10 @@ class Pizza extends FlxExtendedSprite
 		tempTopping = new ToppingSprite(topping, cooked);
 
 		// place ingredient sprite over the pizza
-		var xPos:Int = Std.int(((this.width - tempTopping.width) / 2));
-		var yPos:Int = Std.int(((this.height - tempTopping.height) / 2));
+		var xPos:Int = Std.int((this.width / 2));
+		var yPos:Int = Std.int((this.height / 2));
 
-		stamp(tempTopping, xPos, yPos);
+		stamp(tempTopping);
 
 		// Add the ingredient to the toppingSprites group
 		toppingSprites.add(tempTopping);
