@@ -50,8 +50,7 @@ class MenuState extends FlxState
 		score.y = title.y + 30;
 
 		// Rules of the game
-		rules = new FlxText(50, 0, 0,
-			"  Basic Rules: As described in the concept, the basic rules of the game are simple. The player will receive orders with specific pizzas, 
+		rules = new FlxText(50, 0, FlxG.width*0.8, "  Basic Rules: As described in the concept, the basic rules of the game are simple. The player will receive orders with specific pizzas, 
 			                             and it is your job to accurately replicate the order, within the customer's patience. Your score will be impacted by the accuracy of your pizza, 
 			                             and if you cant complete a customer's order before there paitence runs out, you will lose score. The control scheme for the game revolves around 
 			                             mouse click and mouse drag interactions. Instructions for creating your pizza are detailed below.
@@ -68,9 +67,7 @@ class MenuState extends FlxState
 									     working on other orders will not provide you with the correct score (You will be handing customers 1 customer 3’s order if you do not follow this rule). 
 									     It is also important to note that as a part of your challenge, you cannot undo any ingredients or start over, so be careful with what you place on your pizza.
 
-									     More Rules and detials found at: https://docs.google.com/document/d/1aPKpBNn7B7GIKRlpjAQMcnFjv93RzyuX0riykhti_Y8/edit?usp=viewing OR within project documents",
-			15);
-
+									     More Rules and detials found at: https://docs.google.com/document/d/1aPKpBNn7B7GIKRlpjAQMcnFjv93RzyuX0riykhti_Y8/edit?usp=viewing OR within project documents", 15);
 		rules.alignment = CENTER;
 		rules.screenCenter(X);
 		rules.y = score.y + 100;
@@ -80,7 +77,7 @@ class MenuState extends FlxState
 		difficulty = new FlxText(50, 0, 130, "Easy", 20);
 		difficulty.alignment = CENTER;
 		difficulty.screenCenter(X);
-		difficulty.y = rules.y + 375;
+		difficulty.y = rules.y + 450;
 		add(difficulty);
 
 		// Increase Difficulty button
@@ -98,8 +95,9 @@ class MenuState extends FlxState
 		// Centered Play button to start/restart the game
 		play = new FlxButton(0, 0, "Play", clickPlay);
 		play.x = (FlxG.width / 2) - (play.width / 2);
-		play.y = (FlxG.height / 2 + 75);
+		play.y = (FlxG.height / 2+225);
 		add(play);
+
 
 		super.create();
 	}
