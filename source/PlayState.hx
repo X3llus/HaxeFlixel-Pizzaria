@@ -194,12 +194,12 @@ class PlayState extends FlxState
 	}
 
 	// needed to convert overlapping with ticket sprite into calling serving order
-	function serveHelper(pizza:Pizza, ticket:FlxSprite)
-	{
-		{
-			servePizza(pizza, currentOrder);
-		}
-	}
+	// function serveHelper(pizza:Pizza, ticket:FlxSprite)
+	// {
+	// 	{
+	// 		servePizza(pizza, currentOrder);
+	// 	}
+	// }
 
 	function resetTickets()
 	{
