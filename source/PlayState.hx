@@ -9,6 +9,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.addons.plugin.FlxMouseControl;
+import flixel.addons.ui.FlxButtonPlus;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.mouse.FlxMouseEventManager;
@@ -357,9 +358,10 @@ class PlayState extends FlxState
 
 		finalText.autoSize = true;
 		finalText.screenCenter();
+		finalText.color = FlxColor.RED;
 		add(finalText);
 
-		var menuButton = new FlxButton(0, 0, "Back to main menu", goToMenuState);
+		var menuButton = new FlxButtonPlus(0, 0, goToMenuState, "Back to main menu");
 		menuButton.setSize(2.0, 2.0);
 		menuButton.screenCenter();
 		menuButton.y += finalText.height;
