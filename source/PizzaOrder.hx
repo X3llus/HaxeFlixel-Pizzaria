@@ -40,8 +40,8 @@ class PizzaOrder
 		while (complexity > 0)
 		{ // create pizza loop
 			// if complexity is higher then offering, set to max offerings
-			if (complexity > 4)
-				complexity = 4;
+// 			if (complexity > 4)
+// 				complexity = 4;
 
 			// Decides on random topping
 			var x = randomRangeInt(1, 6);
@@ -62,12 +62,12 @@ class PizzaOrder
 			if (x > 3)
 			{ // random Topping
 				x = randomRangeInt(1, 2);
-				if (x == 1 && pTopping.contains("mushroom") == false)
+				if (x == 1)
 				{
 					pTopping.push("mushroom");
 					complexity -= 1;
 				}
-				if (x == 2 && pTopping.contains("pepperoni") == false)
+				if (x == 2)
 				{
 					pTopping.push("pepperoni");
 					complexity -= 1;
