@@ -39,10 +39,10 @@ class PlayState extends FlxState
 
 	var balance:Int = 100;
 	var balanceText:FlxText;
-
-	var tickets:Array<Ticket> = new Array<Ticket>();
+	var currentOrder:PizzaOrder;
 
 	var pizzasServed:Int = 0;
+	var tickets:Array<Ticket> = new Array<Ticket>();
 
 	// var ticket:FlxSprite;
 	// Random Number generator
@@ -192,14 +192,6 @@ class PlayState extends FlxState
 		}
 		super.update(elapsed);
 	}
-
-	// needed to convert overlapping with ticket sprite into calling serving order
-	// function serveHelper(pizza:Pizza, ticket:FlxSprite)
-	// {
-	// 	{
-	// 		servePizza(pizza, currentOrder);
-	// 	}
-	// }
 
 	function resetTickets()
 	{
