@@ -13,18 +13,18 @@ class Ticket {
     public var t4:FlxText;
 
     public function new(xStart:Int) {
-        ticket = new FlxSprite(10 + xStart, 100);
+        ticket = new FlxSprite(10 + xStart, 10);
         ticket.loadGraphic("assets/images/environment/notepad.jpg");
-        ticket.scale.set(0.30, 0.30);
+        ticket.scale.set(0.4, 0.4);
         ticket.updateHitbox();
 
         trace("Ticket number " + xStart);
 
-        tHead = new flixel.text.FlxText(39 + xStart, 100, 0, "Current Order", 12);
-        t1 = new flixel.text.FlxText(39 + xStart, 135, 0, "", 12);
-        t2 = new flixel.text.FlxText(39 + xStart, 165, 0, "", 12);
-        t3 = new flixel.text.FlxText(39 + xStart, 195, 0, "", 9);
-        t4 = new flixel.text.FlxText(37 + xStart, 160, "", 7);
+        tHead = new flixel.text.FlxText(45 + xStart, 10, 0, "Current Order", 12);
+        t1 = new flixel.text.FlxText(45 + xStart, 55, 0, "", 12);
+        t2 = new flixel.text.FlxText(45 + xStart, 75, 0, "", 12);
+        t3 = new flixel.text.FlxText(45 + xStart, 105, 0, "", 12);
+        t4 = new flixel.text.FlxText(45 + xStart, 70, "", 12);
 
         tHead.color = FlxColor.BLACK;
         t1.color = FlxColor.BLACK;

@@ -194,6 +194,7 @@ class PlayState extends FlxState
 					resetTickets();
 					tickets.splice(i, 1);
 					displayTicket();
+					break;
 				}
 			}
 		}

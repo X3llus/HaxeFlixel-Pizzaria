@@ -106,12 +106,12 @@ class PizzaOrder
 		textSauce.text = pizzaOrder.pSauce;
 		textCheese.text = pizzaOrder.pCheese;
 		// Convert array of strings into one string with spaces
-		var sTopping = "";
-		for (top in pizzaOrder.pTopping)
-		{
-			sTopping = sTopping + " " + top;
-		}
-		textTopping.text = sTopping;
+		// var sTopping = "";
+		// for (top in pizzaOrder.pTopping)
+		// {
+		// 	sTopping = sTopping + "\n" + top;
+		// }
+		textTopping.text = pizzaOrder.pTopping.join("\n");
 
 		// Convert array of strings into one string with spaces
 		var sOrder = "";
