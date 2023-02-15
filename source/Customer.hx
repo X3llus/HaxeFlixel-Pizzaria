@@ -15,7 +15,7 @@ class Customer {
     public function new(difficulty:Int, event:Event<Void->Void>) {
         this.event = event;
         order = PizzaOrder.newOrder(PlayState.getMaxComplexity(difficulty));
-        patienceTime = (10 - difficulty) * 3;
+        patienceTime = (10 - difficulty) * 4;
         timer = haxe.Timer.delay(onTimer, patienceTime * 1000);
     }
 
