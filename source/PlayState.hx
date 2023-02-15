@@ -350,9 +350,24 @@ class PlayState extends FlxState
 	function endGame()
 	{
 		trace("Endgame activated");
-		var finalText = new FlxText(0, 0, FlxG.width * 0.8, "You are out of money! You served " + pizzasServed + " orders");
+		var finalText = new FlxText(0, 0, FlxG.width * 0.8, "You are out of money! You served " + pizzasServed + " orders", 64);
+		pizza.kill();
+		pizzaToppings.kill();
+		pizzaToppings.destroy();
+
 		finalText.autoSize = true;
 		finalText.screenCenter();
 		add(finalText);
+
+		var menuButton = new FlxButton(0, 0, "Back to main menu", goToMenuState);
+		menuButton.setSize(2.0, 2.0);
+		menuButton.screenCenter();
+		menuButton.y += finalText.height;
+		add(menuButton);
+	}
+
+	function goToMenuState()
+	{
+		FlxG.switchState(new MenuState(pizzasServed));
 	}
 }
