@@ -95,9 +95,10 @@ class MenuState extends FlxState
 		// Centered Play button to start/restart the game
 		play = new FlxButton(0, 0, "Play", clickPlay);
 		play.screenCenter(X);
+		play.scale.set(2, 2);
 		// play.textNormal.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
 		// play.textHighlight.setFormat(null, 26, 0xffffff, "center", OUTLINE, FlxColor.BLACK);
-		play.y = difficulty.y + 70;
+		play.y = difficulty.y + 100;
 		add(play);
 
 		super.create();
