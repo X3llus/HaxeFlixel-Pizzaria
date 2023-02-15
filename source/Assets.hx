@@ -1,7 +1,8 @@
-import flixel.graphics.FlxGraphic;
 import Topping.ToppingEnum;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.addons.display.FlxExtendedSprite;
+import flixel.graphics.FlxGraphic;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 
@@ -35,60 +36,55 @@ class AssetsUtil
 	}
 }
 
-class ToppingSprite extends FlxSprite
+class ToppingSprite extends FlxExtendedSprite
 {
+	public var value:ToppingEnum;
+
 	public function new(topping:ToppingEnum, cooked:Bool = false)
 	{
 		super();
+		value = topping;
 		switch topping
 		{
 			case ToppingEnum.pepperoni:
-				loadGraphic(AssetPaths.pepperoni_topping__png, false, 21, 21, false);
-				setGraphicSize(20, 0);
+				loadGraphic(AssetPaths.pepperoni_topping__png);
 			case ToppingEnum.mushroom:
-				loadGraphic(AssetPaths.mushroom_topping__png, false, 10, 9, false);
-				setGraphicSize(20, 0);
+				loadGraphic(AssetPaths.mushroom_topping__png);
 			case ToppingEnum.yellow_cheese:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_yellow_cheese__png, 100, 100, false);
+					loadGraphic(AssetPaths.cooked_yellow_cheese__png);
 				else
 				{
-					loadGraphic(AssetPaths.yellow_cheese_topping__png, 100, 100, false);
-					setGraphicSize(30, 0);
+					loadGraphic(AssetPaths.yellow_cheese_topping__png);
 				}
 			case ToppingEnum.white_cheese:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_white_cheese__png, 100, 100, false);
+					loadGraphic(AssetPaths.cooked_white_cheese__png);
 				else
 				{
-					loadGraphic(AssetPaths.white_cheese_topping__png, 100, 100, false);
-					setGraphicSize(30, 0);
+					loadGraphic(AssetPaths.white_cheese_topping__png);
 				}
 			case ToppingEnum.light_sauce:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_light_sauce__png, 100, 100, false);
+					loadGraphic(AssetPaths.cooked_light_sauce__png);
 				else
 				{
-					loadGraphic(AssetPaths.light_sauce_topping__png, 73, 69, false);
-					setGraphicSize(50, 0);
+					loadGraphic(AssetPaths.light_sauce_topping__png);
 				}
 			case ToppingEnum.dark_sauce:
 				if (cooked)
-					loadGraphic(AssetPaths.cooked_dark_sauce__png, 100, 100, false);
+					loadGraphic(AssetPaths.cooked_dark_sauce__png);
 				else
 				{
-					loadGraphic(AssetPaths.dark_sauce_topping__png, 71, 68, false);
-					setGraphicSize(50, 0);
+					loadGraphic(AssetPaths.dark_sauce_topping__png);
 				}
 				updateHitbox();
 		}
 	}
 }
 
-
 //   d8,
 //  `8P
-
 //   88b  88bd88b     ?88,.d88b,  88bd88b d8888b  d888b8b    88bd88b d8888b .d888b, .d888b,
 //   88P  88P' ?8b    `?88'  ?88  88P'  `d8P' ?88d8P' ?88    88P'  `d8b_,dP ?8b,    ?8b,
 //  d88  d88   88P      88b  d8P d88     88b  d8888b  ,88b  d88     88b       `?8b    `?8b
@@ -96,17 +92,12 @@ class ToppingSprite extends FlxSprite
 //                      88P'                            )88
 //                     d88                             ,88P
 //                     ?8P                         `?8888P
-
-
 // class CustomerSprite extends FlxSprite
 // {
 // 	private var state:Emotion;
-
 // 	public var avatar:Int;
-
 // 	/** one-based index	 */
 // 	public static final AVATAR_COUNT = 83;
-
 // 	/**
 // 		Create a new customer sprite
 // 		@param avatar an zero-based index of which avatar to render out of 82
@@ -119,24 +110,20 @@ class ToppingSprite extends FlxSprite
 // 		for (i in 0...AVATAR_COUNT)
 // 			for(j in 0...Emotion.createAll().length)
 // 			animation.add(Emotion.createByIndex(j) + "-" + i,[j*i*5]);
-
 // 		// trace(animation.getAnimationList());
 // 		setAvatar(avatar);
 // 		trace(animation.frames);
 // 		setEmotion(Emotion.neutral);
 // 		updateGraphic();
 // 	}
-
 // 	public function setEmotion(emotion:Emotion)
 // 	{
 // 		state = emotion;
 // 	}
-
 // 	public function getEmotion():Emotion
 // 	{
 // 		return state;
 // 	}
-
 // 	public function setAvatar(index:Int)
 // 	{
 // 		if (index < 0 || index > AVATAR_COUNT)
@@ -144,18 +131,15 @@ class ToppingSprite extends FlxSprite
 // 		else
 // 			avatar = index;
 // 	}
-
 // 	public function getAvatar():Int
 // 	{
 // 		return avatar;
 // 	}
-
 // 	private function updateGraphic()
 // 	{
 // 		animation.play(state.getIndex()+"-"+avatar);
 // 	}
 // }
-
 // enum Emotion
 // {
 // 	neutral;
