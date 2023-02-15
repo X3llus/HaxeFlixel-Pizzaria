@@ -14,6 +14,7 @@ import flixel.addons.ui.FlxButtonPlus;
 import flixel.graphics.FlxGraphic;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
+import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import flixel.util.FlxColor;
@@ -44,13 +45,13 @@ class PlayState extends FlxState
 	var pizzasServed:Int = 0;
 	var tickets:Array<Ticket> = new Array<Ticket>();
 
-	
-	//sounds
+	// sounds
 	var soundPlace:flixel.system.FlxSound;
 	var soundTimer:flixel.system.FlxSound;
 	var soundFire:flixel.system.FlxSound;
 	var soundScore:flixel.system.FlxSound;
 	var soundTicket:flixel.system.FlxSound;
+
 	// var ticket:FlxSprite;
 	// Random Number generator
 	public function randomRangeInt(min:Int, max:Int):Int
@@ -74,14 +75,14 @@ class PlayState extends FlxState
 
 		FlxG.debugger.visible = false;
 		// play bg music and loop
-		//sounds
+		// sounds
 		FlxG.sound.playMusic("assets/music/background.ogg");
 
 		soundPlace = FlxG.sound.load("assets/sounds/place.wav");
-		soundFire  = FlxG.sound.load("assets/sounds/fire.wav");
-		soundTimer =   FlxG.sound.load("assets/sounds/timer.wav");
-		soundScore =   FlxG.sound.load("assets/sounds/score.wav");
-		soundTicket =   FlxG.sound.load("assets/sounds/ticket.wav");
+		soundFire = FlxG.sound.load("assets/sounds/fire.wav");
+		soundTimer = FlxG.sound.load("assets/sounds/timer.wav");
+		soundScore = FlxG.sound.load("assets/sounds/score.wav");
+		soundTicket = FlxG.sound.load("assets/sounds/ticket.wav");
 
 		// Adds the FlxMouseControl plugin - absolutely required
 		FlxG.plugins.list.push(new FlxMouseControl());
@@ -313,7 +314,6 @@ class PlayState extends FlxState
 		pizza.visible = false;
 		oven.cookPizza(pizza);
 		soundFire.play();
-
 	}
 
 	/**
@@ -378,14 +378,15 @@ class PlayState extends FlxState
 		trace("Endgame activated");
 		var finalText = new FlxText(0, 0, FlxG.width * 0.8, "You are out of money! You served " + pizzasServed + " orders", 64);
 		pizza.kill();
+		counter.stop();
 
 		finalText.autoSize = true;
 		finalText.screenCenter();
 		finalText.color = FlxColor.RED;
 		add(finalText);
 
-		var menuButton = new FlxButtonPlus(0, 0, goToMenuState, "Back to main menu");
-		menuButton.setSize(2.0, 2.0);
+		var menuButton = new FlxButton(0, 0, "Back to main menu", goToMenuState);
+		// menuButton.setSize(2.0, 2.0);
 		menuButton.screenCenter();
 		menuButton.y += finalText.height;
 		add(menuButton);
