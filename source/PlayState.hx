@@ -68,7 +68,6 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
-		// var backgroundSprite = new FlxGraphic("assets/images/environment/bg.png");
 		var background = new FlxBackdrop("assets/images/environment/bg.jpg", FlxAxes.XY);
 		background.scale.set(0.25, 0.25);
 		add(background);
@@ -131,6 +130,8 @@ class PlayState extends FlxState
 		patienceEvent = new Event<Void->Void>();
 		patienceEvent.add(function()
 		{
+			balance -= 10;
+			balanceText.text = "Your balance: $" + balance;
 			resetTickets();
 			customers.shift();
 			displayTicket();
